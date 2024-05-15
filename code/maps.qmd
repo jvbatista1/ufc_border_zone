@@ -1,0 +1,41 @@
+---
+title: "Maps"
+author: "Victor Batista"
+format: html
+editor: visual
+---
+## Introduction:
+Setting libraries, directory and inputting data
+```{r wd, include=FALSE}
+dropbox <- "c:/Users/victo/dropbox/DISSERTACAO/"
+```
+```{r libraries, include=FALSE}
+packages <- c("sf",
+              "SpatialRDD",
+              "tidyverse",
+              "stargazer",
+              "tmap",
+              "rdrobust",
+              "rddapp",
+              "lfe",
+              "geobr",
+              "summarytools",
+              "kableExtra",
+              "gifski",
+              "readxl")
+lapply(packages, require, character.only = TRUE)
+rm(packages)
+```
+```{r input, include=FALSE}
+#source?
+border_data <- read_excel(file.path(dropbox,"Base_homicidios.xlsx"))
+glimpse(border_data)
+
+```
+```{r include=FALSE}
+border_data |> 
+  separate(Município, c("code_muni", "name_muni"), sep = 7) |> 
+  separate(code_muni, c("code_muni", NA), sep = -1) |> 
+  dplyr::select(-name_muni)
+```
+
