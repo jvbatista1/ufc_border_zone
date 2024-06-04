@@ -1,13 +1,13 @@
 ---
-title: "Maps"
+title: "Mapas e análise exploratória dos dados"
 author: "Victor Batista"
 format: html
 editor: visual
 ---
 
-## Introduction:
+# Introdução
 
-Setting libraries, directory and inputting data
+Configura pacotes, diretórios e insere os dados
 
 ```{r wd, include=FALSE}
 dropbox <- "c:/Users/victo/dropbox/DISSERTACAO/"
@@ -31,8 +31,6 @@ lapply(packages, require, character.only = TRUE)
 rm(packages)
 ```
 
-## Importação dos dados
-
 ```{r input, include=FALSE}
 #source?
 border_data <- read_excel(file.path(dropbox,"Base_homicidios.xlsx"))
@@ -47,9 +45,10 @@ border_data <- border_data |>
   dplyr::select(-name_muni)
 ```
 
-## Importação dos mapas
+# Mapas
 
-### Ler os shapefiles
+## Lê os shapefiles
+
 ```{r shapefilefronteira, echo=TRUE, warning=FALSE}
 fronteira <- st_read(file.path(dropbox,"Fronteira/Faixa_de_Fronteira_por_UF_2022.shp")) %>%
   st_transform("WGS84")
@@ -59,7 +58,8 @@ tm_shape(fronteira, unit = "km")+
   tm_borders(col = "black")
 ```
 
-Uniformiza a faixa de fronteira como uma única região
+## Uniformiza a faixa de fronteira como uma única região
+
 ```{r sflinha, echo=TRUE, warning=FALSE}
 linha_fronteira <- fronteira %>%
   mutate(pais = "BR") %>% 
@@ -70,7 +70,9 @@ tm_shape(linha_fronteira, unit = "km")+
   tm_fill(alpha = 0.7) + 
   tm_borders(col = "black")
 ```
-Carrega sf dos municípios brasileiros
+
+## Carrega sf dos municípios brasileiros
+
 ```{r sfmunicipios, echo=TRUE, warning=FALSE}
 municipios <- read_municipality(year=2020, showProgress = T) %>%
   st_transform("WGS84")
@@ -79,7 +81,9 @@ tm_shape(municipios, unit = "km")+
   tm_fill(alpha = 0.7) + 
   tm_borders(col = "black")
 ```
-Carrega o sf dos países da América do Sul
+
+## Carrega o sf dos países da América do Sul
+
 ```{r sfamerica, echo=TRUE, warning=FALSE}
 america <- st_read(file.path(dropbox,"America/South_America.shp")) %>% 
   st_transform("WGS84")
@@ -88,7 +92,9 @@ tm_shape(america, unit = "km")+
   tm_fill(alpha = 0.7) + 
   tm_borders(col = "black")
 ```
-Carrega o sf dos municípios da faixa de fronteira
+
+## Carrega o sf dos municípios da faixa de fronteira
+
 ```{r sfmunicipiosff, echo=TRUE, warning=FALSE}
 municipios_fronteira <- st_read(file.path(dropbox,"Municipios_Fronteira/Municipios_Faixa_Fronteira_2022.shp")) %>%
   st_transform("WGS84")
@@ -97,7 +103,9 @@ tm_shape(municipios_fronteira, unit = "km")+
   tm_fill(alpha = 0.7) + 
   tm_borders(col = "black")
 ```
-Elaboração da nova proposta
+
+## Novos municípios propostos
+
 ```{r}
 # Estabelece a nova proposta de faixa de fronteira
 linha_fronteira_300km <- st_buffer(linha_fronteira, dist = 150000)
@@ -108,6 +116,9 @@ municipios$inter <- st_intersects(municipios, linha_fronteira_300km, sparse = F)
 table(municipios$inter)
 
 ```
+
+## Faixa de fronteira original
+
 ```{r}
 # Adiciona variável de pertencimento à fronteira original
 municipios <- municipios %>%
@@ -115,9 +126,8 @@ municipios <- municipios %>%
 table(municipios$fronteira)
 ```
 
-## Realizar os filtros que selecionam as regiões de interesse
+# Criação de tratamento e controle
 
-Classifica tratamento e controle
 ```{r}
 df <- municipios |>
   #filtra os municípios na nova faixa
@@ -132,9 +142,10 @@ df <- municipios |>
   # exclui a variável classificatória. as recém criadas a substituem
   dplyr::select(-inter)
 
-df
+glimpse(df)
 
 ```
+
 ```{r}
 # prepara a tabela da fronteira para mergir com a df principal (municipios)
 t <- municipios_fronteira |> 
@@ -153,7 +164,7 @@ st_geometry(t) <- NULL
 df <- dplyr::left_join(df, t, by = "code_muni")
 rm(t)
 
-df
+glimpse(df)
 ```
 
 ```{r}
@@ -177,7 +188,7 @@ st_geometry(t) <- NULL
 df <- dplyr::left_join(df, t, by = "code_muni")
 rm(t)
 
-df
+glimpse(df)
 ```
 
 ```{r}
@@ -216,18 +227,25 @@ a <- as.data.frame(a) %>%
 df <- cbind(df, a)
 rm(a)
 
-df
+glimpse(df)
 
 ```
-Mapa por grupos
+
+# Mapas
+
+## Mapa por grupos
+
 ```{r}
 tm_shape(df) + tm_polygons(col = "groups")
 ```
 
-Mapa por arcos
+## Mapa por arcos
+
 ```{r}
 tm_shape(df) + tm_polygons(col = "arcos")
 ```
+
+# Análise exploratória
 
 ```{r}
 base_homicidios <- read_excel(file.path(dropbox, "Base_homicidios.xlsx"))
@@ -241,18 +259,53 @@ base_homicidios
 ```
 
 ```{r}
-
-df_rdd <- df %>% separate(code_muni, c("code_muni", NA), sep = -1)
-df_rdd
-```
-
-```{r}
+# separar em dois, porque o tidyverse não funciona bem com arquivos espaciais
+df_rdd <- df %>%
+  separate(code_muni, c("code_muni", NA), sep = -1)
 
 df_rdd <- left_join(df_rdd, base_homicidios, by = "code_muni") %>%
   mutate(`Porcentagem_Homens_Jovens` = as.numeric(`Porcentagem_Homens_Jovens`))
 
-df_rdd
+glimpse(df_rdd)
 ```
 
+## Desemprego
 
-Gerar o mapa
+```{r, include=FALSE}
+library(skimr)
+library(GGally)
+```
+
+```{r, echo=TRUE, warning=FALSE}
+skim(df_rdd)
+
+```
+
+```{r}
+# Distribuição de uma variável contínua
+ggplot(df_rdd, aes(x = Taxa_de_analfabetismo)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 30, fill = "skyblue", color = "black") +
+  geom_density(color = "red") +
+  ggtitle("Distribuição da Taxa de Analfabetismo")
+
+# Distribuição de uma variável categórica
+ggplot(df, aes(x = groups)) +
+  
+  geom_bar(fill = "skyblue", color = "black") +
+  ggtitle("Distribuição dos Grupos (Tratamento vs Controle)")
+
+```
+
+## Gini
+
+## PIB *per capita*
+
+## Renda abaixo de 1/4 SM
+
+## Trabalho infantil
+
+## Homens jovens 
+
+## Homicídios
+
+## Analisar o resultado dos modelos
