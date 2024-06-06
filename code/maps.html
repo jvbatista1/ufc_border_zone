@@ -610,17 +610,17 @@ $ `valor-2019`                     &lt;dbl&gt; 34.87, 35.23, 0.00, 24.60, 18.38,
 $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62.1946…</code></pre>
 </div>
 </div>
-<section id="desemprego" class="level2">
-<h2 class="anchored" data-anchor-id="desemprego">Desemprego</h2>
+<section id="estatísticas-descritivas" class="level2">
+<h2 class="anchored" data-anchor-id="estatísticas-descritivas">Estatísticas descritivas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(df_rdd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Name</td>
-<td style="text-align: left;">df</td>
+<td style="text-align: left;">df_rdd</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Number of rows</td>
@@ -628,7 +628,7 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Number of columns</td>
-<td style="text-align: left;">27</td>
+<td style="text-align: left;">44</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">_______________________</td>
@@ -640,17 +640,21 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 </tr>
 <tr class="even">
 <td style="text-align: left;">character</td>
-<td style="text-align: left;">7</td>
+<td style="text-align: left;">13</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">numeric</td>
-<td style="text-align: left;">20</td>
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">14</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">17</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">________________________</td>
 <td style="text-align: left;"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Group variables</td>
 <td style="text-align: left;">None</td>
 </tr>
@@ -682,6 +686,16 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">code_muni</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1132</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">name_muni</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1.00</td>
@@ -689,6 +703,16 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 <td style="text-align: right;">32</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1115</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">code_state</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
@@ -712,6 +736,16 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">code_region</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">name_region</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1.00</td>
@@ -721,7 +755,7 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">groups</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1.00</td>
@@ -731,7 +765,7 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">0</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">arcos</td>
 <td style="text-align: right;">12</td>
 <td style="text-align: right;">0.99</td>
@@ -739,6 +773,36 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 <td style="text-align: right;">12</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AREA_TOT</td>
+<td style="text-align: right;">544</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">588</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AREA_INT</td>
+<td style="text-align: right;">544</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">588</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PORC_INT</td>
+<td style="text-align: right;">544</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">158</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
@@ -753,19 +817,131 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 </tr>
 </tbody>
 </table>
+<p><strong>Variable type: logical</strong></p>
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: left;">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">fronteira</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: left;">TRU: 588, FAL: 544</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">treated</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: left;">TRU: 588, FAL: 544</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CID_GEMEA</td>
+<td style="text-align: right;">544</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: left;">FAL: 555, TRU: 33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FAIXA_SEDE</td>
+<td style="text-align: right;">544</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: left;">TRU: 511, FAL: 77</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: left;">FAL: 1099, TRU: 33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bolivia</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: left;">FAL: 1112, TRU: 20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Colombia</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: left;">FAL: 1130, TRU: 2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">French_Guiana</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: left;">FAL: 1130, TRU: 2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Guyana</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: left;">FAL: 1126, TRU: 6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Suriname</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: left;">FAL: 1128, TRU: 4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Paraguay</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: left;">FAL: 1112, TRU: 20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peru</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: left;">FAL: 1120, TRU: 12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Uruguay</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: left;">FAL: 1120, TRU: 12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Venezuela</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: left;">FAL: 1124, TRU: 8</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Variable type: numeric</strong></p>
 <table class="table table-sm table-striped small">
 <colgroup>
-<col style="width: 11%">
+<col style="width: 24%">
 <col style="width: 8%">
 <col style="width: 11%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
 <col style="width: 4%">
 </colgroup>
 <thead>
@@ -785,290 +961,472 @@ $ geom                             &lt;MULTIPOLYGON [°]&gt; MULTIPOLYGON (((-62
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">code_muni</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">3934236.15</td>
-<td style="text-align: right;">1054721.84</td>
-<td style="text-align: right;">1100015.00</td>
-<td style="text-align: right;">4112714.00</td>
-<td style="text-align: right;">4215691.00</td>
-<td style="text-align: right;">4314108.50</td>
-<td style="text-align: right;">5108907.00</td>
-<td style="text-align: left;">▂▁▁▇▆</td>
+<td style="text-align: left;">Taxa_de_analfabetismo</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9.90</td>
+<td style="text-align: right;">5.72</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">6.00</td>
+<td style="text-align: right;">9.10</td>
+<td style="text-align: right;">12.20</td>
+<td style="text-align: right;">40.20</td>
+<td style="text-align: left;">▇▇▁▁▁</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">code_state</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">39.24</td>
-<td style="text-align: right;">10.52</td>
-<td style="text-align: right;">11.00</td>
-<td style="text-align: right;">41.00</td>
-<td style="text-align: right;">42.00</td>
-<td style="text-align: right;">43.00</td>
-<td style="text-align: right;">51.00</td>
-<td style="text-align: left;">▂▁▁▇▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">code_region</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">3.72</td>
-<td style="text-align: right;">1.09</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">4.00</td>
-<td style="text-align: right;">4.00</td>
-<td style="text-align: right;">4.00</td>
-<td style="text-align: right;">5.00</td>
-<td style="text-align: left;">▂▁▁▇▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">fronteira</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">0.50</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▇</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">treated</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">0.50</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▇</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">AREA_TOT</td>
-<td style="text-align: right;">544</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">3829.99</td>
-<td style="text-align: right;">11882.68</td>
-<td style="text-align: right;">54.81</td>
-<td style="text-align: right;">206.09</td>
-<td style="text-align: right;">431.17</td>
-<td style="text-align: right;">2047.06</td>
-<td style="text-align: right;">122461.09</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">AREA_INT</td>
-<td style="text-align: right;">544</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">2411.07</td>
-<td style="text-align: right;">7115.54</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">173.01</td>
-<td style="text-align: right;">351.23</td>
-<td style="text-align: right;">1363.07</td>
-<td style="text-align: right;">90793.38</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">PORC_INT</td>
-<td style="text-align: right;">544</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">87.07</td>
-<td style="text-align: right;">27.88</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">98.67</td>
-<td style="text-align: right;">100.00</td>
-<td style="text-align: right;">100.00</td>
-<td style="text-align: right;">100.00</td>
-<td style="text-align: left;">▁▁▁▁▇</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CID_GEMEA</td>
-<td style="text-align: right;">544</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">0.06</td>
-<td style="text-align: right;">0.23</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">FAIXA_SEDE</td>
-<td style="text-align: right;">544</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">0.87</td>
-<td style="text-align: right;">0.34</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▁▁▁▁▇</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Argentina</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Bolivia</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.13</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Colombia</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">French_Guiana</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Guyana</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.07</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Suriname</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.06</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Paraguay</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.13</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Peru</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: left;">Taxa_de_desemprego_16a_e+</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.10</td>
+<td style="text-align: right;">2.72</td>
 <td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
+<td style="text-align: right;">2.09</td>
+<td style="text-align: right;">3.82</td>
+<td style="text-align: right;">5.64</td>
+<td style="text-align: right;">27.76</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Uruguay</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">0.10</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Venezuela</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.01</td>
+<td style="text-align: left;">Gini</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.50</td>
 <td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: left;">▁▇▆▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PIB_per_capita</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16374.49</td>
+<td style="text-align: right;">12533.65</td>
+<td style="text-align: right;">3129.35</td>
+<td style="text-align: right;">10556.22</td>
+<td style="text-align: right;">13963.55</td>
+<td style="text-align: right;">18872.09</td>
+<td style="text-align: right;">220358.29</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">%<em>população_com_renda</em>&lt;_1/4_SM</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">13.86</td>
+<td style="text-align: right;">13.03</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">5.33</td>
+<td style="text-align: right;">9.86</td>
+<td style="text-align: right;">17.62</td>
+<td style="text-align: right;">77.91</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Taxa_de_trabalho_infantil</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">17.23</td>
+<td style="text-align: right;">10.81</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">9.36</td>
+<td style="text-align: right;">14.47</td>
+<td style="text-align: right;">22.13</td>
+<td style="text-align: right;">72.09</td>
+<td style="text-align: left;">▇▆▂▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Porcentagem_Homens_Jovens</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12.48</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">7.88</td>
+<td style="text-align: right;">11.54</td>
+<td style="text-align: right;">12.43</td>
+<td style="text-align: right;">13.32</td>
+<td style="text-align: right;">26.72</td>
+<td style="text-align: left;">▃▇▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">valor-2010</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.53</td>
+<td style="text-align: right;">18.70</td>
 <td style="text-align: right;">0.00</td>
 <td style="text-align: right;">0.00</td>
+<td style="text-align: right;">10.15</td>
+<td style="text-align: right;">24.97</td>
+<td style="text-align: right;">147.36</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">valor-2011</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14.09</td>
+<td style="text-align: right;">17.28</td>
 <td style="text-align: right;">0.00</td>
 <td style="text-align: right;">0.00</td>
-<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">9.14</td>
+<td style="text-align: right;">22.91</td>
+<td style="text-align: right;">111.06</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">valor-2012</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16.09</td>
+<td style="text-align: right;">19.34</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">10.88</td>
+<td style="text-align: right;">25.44</td>
+<td style="text-align: right;">132.02</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">valor-2013</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.92</td>
+<td style="text-align: right;">19.77</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">11.70</td>
+<td style="text-align: right;">24.92</td>
+<td style="text-align: right;">183.72</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">valor-2014</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16.45</td>
+<td style="text-align: right;">19.04</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">11.75</td>
+<td style="text-align: right;">27.14</td>
+<td style="text-align: right;">153.89</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">valor-2015</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16.47</td>
+<td style="text-align: right;">19.15</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">11.85</td>
+<td style="text-align: right;">25.67</td>
+<td style="text-align: right;">137.13</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">valor-2016</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">18.23</td>
+<td style="text-align: right;">20.68</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">13.22</td>
+<td style="text-align: right;">28.63</td>
+<td style="text-align: right;">155.08</td>
+<td style="text-align: left;">▇▂▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">valor-2017</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.56</td>
+<td style="text-align: right;">22.23</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">14.57</td>
+<td style="text-align: right;">30.12</td>
+<td style="text-align: right;">222.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">valor-2018</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16.87</td>
+<td style="text-align: right;">20.25</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">12.38</td>
+<td style="text-align: right;">25.48</td>
+<td style="text-align: right;">211.02</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">valor-2019</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.47</td>
+<td style="text-align: right;">19.21</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">10.86</td>
+<td style="text-align: right;">23.98</td>
+<td style="text-align: right;">176.68</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> groups)) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribuição dos Grupos (Tratamento vs Controle)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="gini" class="level2">
-<h2 class="anchored" data-anchor-id="gini">Gini</h2>
+<section id="histogramas" class="level2">
+<h2 class="anchored" data-anchor-id="histogramas">Histogramas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de distribuição da Taxa de Analfabetismo para tratamento e controle</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rdd, <span class="fu">aes</span>(<span class="at">x =</span> Taxa_de_analfabetismo, <span class="at">fill =</span> groups)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">position =</span> <span class="st">'identity'</span>, <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> groups), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"treatment"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"control"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"treatment"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"control"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribuição da Taxa de Analfabetismo por Grupo (Tratamento vs Controle)"</span>) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Taxa de Analfabetismo"</span>, <span class="at">y =</span> <span class="st">"Densidade"</span>, <span class="at">fill =</span> <span class="st">"Grupo"</span>, <span class="at">color =</span> <span class="st">"Grupo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_density()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot comparando Taxa de Analfabetismo entre grupos</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rdd, <span class="fu">aes</span>(<span class="at">x =</span> groups, <span class="at">y =</span> Taxa_de_analfabetismo)) <span class="sc">+</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa de Analfabetismo por Grupo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlação entre variáveis socioeconômicas</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="ot">&lt;-</span> df_rdd</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_geometry</span>(correlation_matrix) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="ot">&lt;-</span> correlation_matrix <span class="sc">|&gt;</span> </span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Taxa_de_analfabetismo, <span class="st">`</span><span class="at">Taxa_de_desemprego_16a_e+</span><span class="st">`</span>, Gini, PIB_per_capita) <span class="sc">|&gt;</span>  </span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap da matriz de correlação</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorr</span>(correlation_matrix, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Matriz de Correlação"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot entre PIB per capita e Gini</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rdd, <span class="fu">aes</span>(<span class="at">x =</span> PIB_per_capita, <span class="at">y =</span> Gini, <span class="at">color =</span> groups)) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"PIB per capita vs Gini por Grupo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot de Taxa de desemprego por grupo</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rdd, <span class="fu">aes</span>(<span class="at">x =</span> groups, <span class="at">y =</span> <span class="st">`</span><span class="at">Taxa_de_desemprego_16a_e+</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa de Desemprego por Grupo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="pib-per-capita" class="level2">
-<h2 class="anchored" data-anchor-id="pib-per-capita">PIB <em>per capita</em></h2>
-</section>
-<section id="renda-abaixo-de-14-sm" class="level2">
-<h2 class="anchored" data-anchor-id="renda-abaixo-de-14-sm">Renda abaixo de 1/4 SM</h2>
-</section>
-<section id="trabalho-infantil" class="level2">
-<h2 class="anchored" data-anchor-id="trabalho-infantil">Trabalho infantil</h2>
-</section>
-<section id="homens-jovens" class="level2">
-<h2 class="anchored" data-anchor-id="homens-jovens">Homens jovens</h2>
-</section>
-<section id="homicídios" class="level2">
-<h2 class="anchored" data-anchor-id="homicídios">Homicídios</h2>
-</section>
-<section id="analisar-o-resultado-dos-modelos" class="level2">
-<h2 class="anchored" data-anchor-id="analisar-o-resultado-dos-modelos">Analisar o resultado dos modelos</h2>
+<section id="taxa-de-homicídios" class="level2">
+<h2 class="anchored" data-anchor-id="taxa-de-homicídios">Taxa de homicídios</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecionar colunas de interesse</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>taxa_homicidios <span class="ot">&lt;-</span> df_rdd <span class="sc">|&gt;</span> </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">valor-2010</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">valor-2019</span><span class="st">`</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular estatísticas descritivas</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> taxa_homicidios  <span class="sc">|&gt;</span> </span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>summary_stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   valor-2010       valor-2011       valor-2012       valor-2013    
+ Min.   :  0.00   Min.   :  0.00   Min.   :  0.00   Min.   :  0.00  
+ 1st Qu.:  0.00   1st Qu.:  0.00   1st Qu.:  0.00   1st Qu.:  0.00  
+ Median : 10.15   Median :  9.14   Median : 10.88   Median : 11.70  
+ Mean   : 15.53   Mean   : 14.09   Mean   : 16.09   Mean   : 15.92  
+ 3rd Qu.: 24.97   3rd Qu.: 22.91   3rd Qu.: 25.44   3rd Qu.: 24.92  
+ Max.   :147.36   Max.   :111.06   Max.   :132.02   Max.   :183.72  
+ NA's   :1        NA's   :1        NA's   :1        NA's   :1       
+   valor-2014       valor-2015       valor-2016       valor-2017    
+ Min.   :  0.00   Min.   :  0.00   Min.   :  0.00   Min.   :  0.00  
+ 1st Qu.:  0.00   1st Qu.:  0.00   1st Qu.:  0.00   1st Qu.:  0.00  
+ Median : 11.75   Median : 11.85   Median : 13.22   Median : 14.57  
+ Mean   : 16.45   Mean   : 16.47   Mean   : 18.23   Mean   : 19.56  
+ 3rd Qu.: 27.14   3rd Qu.: 25.67   3rd Qu.: 28.63   3rd Qu.: 30.12  
+ Max.   :153.89   Max.   :137.13   Max.   :155.08   Max.   :222.00  
+ NA's   :1        NA's   :1        NA's   :1        NA's   :1       
+   valor-2018       valor-2019                geom     
+ Min.   :  0.00   Min.   :  0.00   MULTIPOLYGON :1132  
+ 1st Qu.:  0.00   1st Qu.:  0.00   epsg:4326    :   0  
+ Median : 12.38   Median : 10.86   +proj=long...:   0  
+ Mean   : 16.87   Mean   : 15.47                       
+ 3rd Qu.: 25.48   3rd Qu.: 23.98                       
+ Max.   :211.02   Max.   :176.68                       
+ NA's   :1        NA's   :1                            </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar histogramas para cada ano</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>taxa_homicidios_long <span class="ot">&lt;-</span> df_rdd <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(code_muni, groups, <span class="st">`</span><span class="at">valor-2010</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">valor-2019</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">`</span><span class="at">valor-2010</span><span class="st">`</span><span class="sc">:</span><span class="st">`</span><span class="at">valor-2019</span><span class="st">`</span>, <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"taxa_homicidio"</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(taxa_homicidios_long, <span class="fu">aes</span>(<span class="at">x =</span> taxa_homicidio, <span class="at">fill =</span> groups)) <span class="sc">+</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">'identity'</span>, <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> year, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"treatment"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"control"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribuição das Taxas de Homicídio de 2010 a 2019"</span>) <span class="sc">+</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Taxa de Homicídio"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>, <span class="at">fill =</span> <span class="st">"Grupo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 10 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar gráfico de linhas para tendências temporais</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(taxa_homicidios_long, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> taxa_homicidio, <span class="at">group =</span> code_muni, <span class="at">color =</span> groups)) <span class="sc">+</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"treatment"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"control"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Tendências das Taxas de Homicídio de 2010 a 2019 por Grupo"</span>) <span class="sc">+</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano"</span>, <span class="at">y =</span> <span class="st">"Taxa de Homicídio"</span>, <span class="at">color =</span> <span class="st">"Grupo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 10 rows containing non-finite outside the scale range
+(`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 10 rows containing missing values or values outside the scale range
+(`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar boxplots para comparar grupos</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(taxa_homicidios_long, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> taxa_homicidio, <span class="at">fill =</span> groups)) <span class="sc">+</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"treatment"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"control"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Comparação das Taxas de Homicídio de 2010 a 2019 por Grupo"</span>) <span class="sc">+</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano"</span>, <span class="at">y =</span> <span class="st">"Taxa de Homicídio"</span>, <span class="at">fill =</span> <span class="st">"Grupo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 10 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar um mapa para um ano específico, por exemplo, 2019</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_rdd) <span class="sc">+</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="st">`</span><span class="at">valor-2019</span><span class="st">`</span>), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">na.value =</span> <span class="st">"grey90"</span>, <span class="at">name =</span> <span class="st">"Taxa de Homicídio"</span>) <span class="sc">+</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Taxa de Homicídios por Município em 2019"</span>) <span class="sc">+</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar uma série de mapas para diferentes anos</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>years <span class="ot">&lt;-</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2019</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">lapply</span>(years, <span class="cf">function</span>(year) {</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df_rdd) <span class="sc">+</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="fu">aes_string</span>(<span class="at">fill =</span> <span class="fu">paste0</span>(<span class="st">"`valor-"</span>, year, <span class="st">"`"</span>)), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">na.value =</span> <span class="st">"grey90"</span>, <span class="at">name =</span> <span class="fu">paste</span>(<span class="st">"Taxa de Homicídio"</span>, year)) <span class="sc">+</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Taxa de Homicídios,"</span>, year)) <span class="sc">+</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>)</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar todos os mapas em uma grade</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'gridExtra' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'gridExtra'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    combine</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(grid.arrange, <span class="fu">c</span>(plots, <span class="at">ncol =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="maps_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 </section>
 

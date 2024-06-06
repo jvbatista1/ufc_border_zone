@@ -293,8 +293,40 @@ df_rdd <- left_join(df_rdd, base_homicidios, by = "code_muni") %>%
 glimpse(df_rdd)
 ```
 
+```{r, include=FALSE}
+df_rdd <- df_rdd |> 
+  mutate(
+   code_muni = as.character(code_muni),
+   name_muni = as.character(name_muni),
+   code_state = as.character(code_state),
+   abbrev_state = as.character(abbrev_state),
+   name_state = as.character(name_state),
+   code_region = as.character(code_region),
+   name_region = as.character(name_region),
+   fronteira = as.logical(fronteira),
+   treated = as.logical(treated),
+   groups = as.character(groups),
+   arcos = as.character(arcos),
+   AREA_TOT = as.character(AREA_TOT),
+   AREA_INT = as.character(AREA_INT),
+   PORC_INT = as.character(PORC_INT),
+   CID_GEMEA = as.logical(CID_GEMEA),
+   FAIXA_SEDE = as.logical(FAIXA_SEDE),
+   Argentina = as.logical(Argentina),
+   Bolivia = as.logical(Bolivia),
+   Colombia = as.logical(Colombia),
+   French_Guiana = as.logical(French_Guiana),
+   Guyana = as.logical(Guyana),
+   Suriname = as.logical(Suriname),
+   Paraguay = as.logical(Paraguay),
+   Peru = as.logical(Peru),
+   Uruguay = as.logical(Uruguay),
+   Venezuela = as.logical(Venezuela)
+  )
+```
+
 
-## Desemprego
+## Estatísticas descritivas
 
 
 ```{r, include=FALSE}
@@ -308,13 +340,6 @@ skim(df_rdd)
 ```
 
 ```{r}
-# Distribuição de uma variável contínua
-ggplot(df_rdd, aes(x = Taxa_de_analfabetismo)) +
-  geom_histogram(aes(y = after_stat(density)), bins = 30, fill = "skyblue", color = "black") +
-  geom_density(color = "red") +
-  ggtitle("Distribuição da Taxa de Analfabetismo")
-
-# Distribuição de uma variável categórica
 ggplot(df, aes(x = groups)) +
   
   geom_bar(fill = "skyblue", color = "black") +
@@ -323,17 +348,160 @@ ggplot(df, aes(x = groups)) +
 ```
 
 
-## Gini
+## Histogramas
 
-## PIB *per capita*
+
+```{r}
+# Gráfico de distribuição da Taxa de Analfabetismo para tratamento e controle
+ggplot(df_rdd, aes(x = Taxa_de_analfabetismo, fill = groups)) +
+  geom_histogram(aes(y = ..density..), position = 'identity', bins = 30, alpha = 0.5, color = "black") +
+  geom_density(aes(color = groups), size = 1, fill = NA) +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  scale_color_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Distribuição da Taxa de Analfabetismo por Grupo (Tratamento vs Controle)") +
+  theme_minimal() +
+  labs(x = "Taxa de Analfabetismo", y = "Densidade", fill = "Grupo", color = "Grupo")
+```
+
+```{r}
+# Boxplot comparando Taxa de Analfabetismo entre grupos
+ggplot(df_rdd, aes(x = groups, y = Taxa_de_analfabetismo)) +
+  geom_boxplot(fill = "skyblue", color = "black") +
+  ggtitle("Taxa de Analfabetismo por Grupo")
 
-## Renda abaixo de 1/4 SM
+# Correlação entre variáveis socioeconômicas
+correlation_matrix <- df_rdd
 
-## Trabalho infantil
+st_geometry(correlation_matrix) <- NULL
 
-## Homens jovens 
+correlation_matrix <- correlation_matrix |> 
+  select(Taxa_de_analfabetismo, `Taxa_de_desemprego_16a_e+`, Gini, PIB_per_capita) |>  
+  cor()
 
-## Homicídios
+# Heatmap da matriz de correlação
+ggcorr(correlation_matrix, label = TRUE) +
+  ggtitle("Matriz de Correlação")
 
-## Analisar o resultado dos modelos
+```
+
+```{r}
+# Scatter plot entre PIB per capita e Gini
+ggplot(df_rdd, aes(x = PIB_per_capita, y = Gini, color = groups)) +
+  geom_point(size = 2) +
+  ggtitle("PIB per capita vs Gini por Grupo")
+
+# Boxplot de Taxa de desemprego por grupo
+ggplot(df_rdd, aes(x = groups, y = `Taxa_de_desemprego_16a_e+`)) +
+  geom_boxplot(fill = "skyblue", color = "black") +
+  ggtitle("Taxa de Desemprego por Grupo")
+
+```
+
+
+## Taxa de homicídios
+
+
+```{r}
+# Selecionar colunas de interesse
+taxa_homicidios <- df_rdd |> 
+  select(`valor-2010`:`valor-2019`)
+
+# Calcular estatísticas descritivas
+summary_stats <- taxa_homicidios  |> 
+  summary()
+
+summary_stats
+
+```
+
+```{r}
+# Criar histogramas para cada ano
+taxa_homicidios_long <- df_rdd %>% 
+  select(code_muni, groups, `valor-2010`:`valor-2019`) %>%
+  pivot_longer(cols = `valor-2010`:`valor-2019`, names_to = "year", values_to = "taxa_homicidio")
+
+ggplot(taxa_homicidios_long, aes(x = taxa_homicidio, fill = groups)) +
+  geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "black") +
+  facet_wrap(~ year, scales = "free_x") +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Distribuição das Taxas de Homicídio de 2010 a 2019") +
+  theme_minimal() +
+  labs(x = "Taxa de Homicídio", y = "Frequência", fill = "Grupo")
+
+```
+
+```{r}
+# Criar gráfico de linhas para tendências temporais
+ggplot(taxa_homicidios_long, aes(x = year, y = taxa_homicidio, group = code_muni, color = groups)) +
+  geom_line(alpha = 0.3) +
+  geom_smooth(method = "loess", se = FALSE, size = 1) +
+  scale_color_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Tendências das Taxas de Homicídio de 2010 a 2019 por Grupo") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa de Homicídio", color = "Grupo")
+
+```
+
+```{r}
+# Criar boxplots para comparar grupos
+ggplot(taxa_homicidios_long, aes(x = year, y = taxa_homicidio, fill = groups)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Comparação das Taxas de Homicídio de 2010 a 2019 por Grupo") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa de Homicídio", fill = "Grupo")
+
+```
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd) +
+  geom_sf(aes(fill = `valor-2019`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Taxa de Homicídio") +
+  ggtitle("Taxa de Homicídios por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+```
+
+```{r}
+# Criar uma série de mapas para diferentes anos
+years1 <- 2010:2013
+plots1 <- lapply(years, function(year1) {
+  ggplot(df_rdd) +
+    geom_sf(aes_string(fill = paste0("`valor-", year, "`")), color = NA) +
+    scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = paste("Taxa de Homicídio", year)) +
+    ggtitle(paste("Taxa de Homicídios,", year)) +
+    theme_minimal() +
+    theme(legend.position = "right")
+})
+
+years2 <- 2014:2017
+plots2 <- lapply(years, function(year2) {
+  ggplot(df_rdd) +
+    geom_sf(aes_string(fill = paste0("`valor-", year, "`")), color = NA) +
+    scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = paste("Taxa de Homicídio", year)) +
+    ggtitle(paste("Taxa de Homicídios,", year)) +
+    theme_minimal() +
+    theme(legend.position = "right")
+})
+
+years3 <- 2018:2019
+plots3 <- lapply(years, function(year3) {
+  ggplot(df_rdd) +
+    geom_sf(aes_string(fill = paste0("`valor-", year, "`")), color = NA) +
+    scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = paste("Taxa de Homicídio", year)) +
+    ggtitle(paste("Taxa de Homicídios,", year)) +
+    theme_minimal() +
+    theme(legend.position = "right")
+})
+
+# Mostrar todos os mapas em uma grade
+library(gridExtra)
+do.call(grid.arrange, c(plots1, ncol = 2))
+do.call(grid.arrange, c(plots2, ncol = 2))
+do.call(grid.arrange, c(plots3, ncol = 2))
+
+
+```
 
