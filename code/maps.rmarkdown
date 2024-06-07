@@ -467,7 +467,7 @@ ggplot(df_rdd) +
 ```{r}
 # Criar uma série de mapas para diferentes anos
 years1 <- 2010:2013
-plots1 <- lapply(years, function(year1) {
+plots1 <- lapply(years1, function(year) {
   ggplot(df_rdd) +
     geom_sf(aes_string(fill = paste0("`valor-", year, "`")), color = NA) +
     scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = paste("Taxa de Homicídio", year)) +
@@ -477,7 +477,7 @@ plots1 <- lapply(years, function(year1) {
 })
 
 years2 <- 2014:2017
-plots2 <- lapply(years, function(year2) {
+plots2 <- lapply(years2, function(year) {
   ggplot(df_rdd) +
     geom_sf(aes_string(fill = paste0("`valor-", year, "`")), color = NA) +
     scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = paste("Taxa de Homicídio", year)) +
@@ -487,7 +487,7 @@ plots2 <- lapply(years, function(year2) {
 })
 
 years3 <- 2018:2019
-plots3 <- lapply(years, function(year3) {
+plots3 <- lapply(years3, function(year) {
   ggplot(df_rdd) +
     geom_sf(aes_string(fill = paste0("`valor-", year, "`")), color = NA) +
     scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = paste("Taxa de Homicídio", year)) +
@@ -502,6 +502,21 @@ do.call(grid.arrange, c(plots1, ncol = 2))
 do.call(grid.arrange, c(plots2, ncol = 2))
 do.call(grid.arrange, c(plots3, ncol = 2))
 
+
+```
+
+```{r}
+library(ggpattern)
+
+# Criar o mapa com diferenciação visual entre tratamento e controle
+ggplot(df_rdd) +
+  geom_sf_pattern(aes(fill = `valor-2019`, pattern = groups), 
+                  size = 0.2, pattern_density = 0.1) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Taxa de Homicídio") +
+  scale_pattern_manual(values = c("control" = "stripe", "treatment" = "circle")) +
+  ggtitle("Taxa de Homicídios por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
 
 ```
 
