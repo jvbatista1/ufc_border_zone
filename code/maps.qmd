@@ -2,6 +2,7 @@
 title: "Mapas e análise exploratória dos dados"
 author: "Victor Batista"
 format: html
+embed-resources: true
 editor: visual
 ---
 
