@@ -111,7 +111,7 @@ municipal_table <- municipal_table %>%
 
 # Remover a coluna temporária 'nome_upper' se desejar
 municipal_table <- municipal_table %>%
-  select(!id_municipio_6:centroide)
+  select(-id_municipio, !id_municipio_tse:centroide)
 
 #salvar
 write_csv(municipal_table, file.path(dropbox, "municipal_MSP.csv"))
