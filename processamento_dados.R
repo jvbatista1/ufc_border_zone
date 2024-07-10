@@ -1,17 +1,11 @@
 dropbox <- "c:/Users/victo/dropbox/DISSERTACAO"
 
 library(tidyverse)
-library(arrow)
 library(readxl)
-
-homicidios_af <- read_csv2(file.path(dropbox, "taxa_de_homicidios_por_armas_de_fogo.csv"))
-homicidios_af_jovens <- read_csv2(file.path(dropbox, "taxa_de_homicidio_de_jovens_por_armas_de_fogo.csv"))
-obitos_acidentes <- read_csv2(file.path(dropbox, "taxa_de_obitos_em_acidentes_de_transporte.csv"))
-mortes_violentas<- read_csv2(file.path(dropbox, "mortes_violentas.csv"))
 
 #Link base ministério segurança publica
 #https://www.gov.br/mj/pt-br/assuntos/sua-seguranca/seguranca-publica/estatistica/download/dnsp-base-de-dados/bancovde-2019.xlsx/@@download/file
-banco <- read_xlsx(file.path(dropbox, "BancoVDE 2019.xlsx"))
+banco <- read_xlsx(file.path(dropbox, "BancoVDE 2019.xlsx"), col_types = c("text", "text", "text", "date", "text", "text", "text", "numeric", "numeric", "numeric", "numeric", "numeric", "text", "text", "numeric"))
 
 banco |> 
   filter(municipio == "ASSIS BRASIL") |> 
@@ -58,21 +52,21 @@ trafico_table <- read_csv(file.path(dropbox, "evento_Tráfico de drogas.csv")) |
 
 #VARIÁVEIS COM abrangencia municipal
 feminicidio_table <- read_csv(file.path(dropbox, "evento_Feminicídio.csv")) |> 
-  count(uf, municipio, wt=total, name = "feminicidio")
+  count(uf, municipio, wt=total_vitimas, name = "feminicidio")
 hom_doloso_table <- read_csv(file.path(dropbox, "evento_Homicídio doloso.csv")) |> 
-  count(uf, municipio, wt=total, name = "hom_doloso")
+  count(uf, municipio, wt=total_vitimas, name = "hom_doloso")
 lesao_table <- read_csv(file.path(dropbox, "evento_Lesão corporal seguida de morte.csv")) |> 
-  count(uf, municipio, wt=total, name = "lesao")
+  count(uf, municipio, wt=total_vitimas, name = "lesao")
 mandado_table <- read_csv(file.path(dropbox, "evento_Mandado de prisão cumprido.csv")) |> 
   count(uf, municipio, wt=total, name = "mandado")
 transito_table <- read_csv(file.path(dropbox, "evento_Morte no trânsito ou em decorrência dele (exceto homicídio doloso).csv")) |> 
-  count(uf, municipio, wt=total, name = "transito")
+  count(uf, municipio, wt=total_vitimas, name = "transito")
 esclarecer_table <- read_csv(file.path(dropbox, "evento_Mortes a esclarecer (sem indício de crime).csv")) |> 
-  count(uf, municipio, wt=total, name = "esclarecer")
+  count(uf, municipio, wt=total_vitimas, name = "esclarecer")
 latrocinio_table <- read_csv(file.path(dropbox, "evento_Roubo seguido de morte (latrocínio).csv")) |> 
-  count(uf, municipio, wt=total, name = "latrocinio")
+  count(uf, municipio, wt=total_vitimas, name = "latrocinio")
 tentativa_homicidio_table <- read_csv(file.path(dropbox, "evento_Tentativa de homicídio.csv")) |> 
-  count(uf, municipio, wt=total, name = "tentativa_hom")
+  count(uf, municipio, wt=total_vitimas, name = "tentativa_hom")
 
 #tabela final
 municipal_table <- feminicidio_table |> 
@@ -111,7 +105,28 @@ municipal_table <- municipal_table %>%
 
 # Remover a coluna temporária 'nome_upper' se desejar
 municipal_table <- municipal_table %>%
-  select(-id_municipio, !id_municipio_tse:centroide)
+  select(!id_municipio_tse:centroide)
+
+#### POPULACAO ####
+# Calcular em função da população
+query <- bdplyr("br_ibge_populacao.municipio")
+populacao <- bd_collect(query)
+
+municipal_table <- municipal_table |> 
+  left_join(populacao |>
+              filter(ano == 2019) |> 
+              select(id_municipio:populacao), join_by(id_municipio)) |> 
+  mutate(
+    feminicidio_pc = (feminicidio/populacao)*100000,
+    hom_doloso_pc = (hom_doloso/populacao)*100000,
+    lesao_pc = (lesao/populacao)*100000,
+    mandado_pc = (mandado/populacao)*100000,
+    transito_pc = (transito/populacao)*100000,
+    esclarecer_pc = (esclarecer/populacao)*100000, 
+    latrocinio_pc = (latrocinio/populacao)*100000,
+    tentativa_hom_pc = (tentativa_hom/populacao)*100000
+  ) |> 
+  select(!feminicidio:tentativa_hom)
 
 #salvar
 write_csv(municipal_table, file.path(dropbox, "municipal_MSP.csv"))

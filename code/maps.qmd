@@ -490,3 +490,5 @@ ggplot(df_rdd) +
   theme(legend.position = "right")
 
 ```
+
+Procurar subarcos da faixa da fronteira

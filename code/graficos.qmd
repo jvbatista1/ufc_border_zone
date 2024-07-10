@@ -152,7 +152,7 @@ df <- cbind(df, a)
 rm(a)
 ```
 
-## Mapa por grupos 
+## Mapa por grupos
 
 ```{r}
 tm_shape(df) + tm_polygons(col = "groups")
@@ -183,7 +183,7 @@ outros_crimes <- read_csv(file.path(dropbox, "municipal_MSP.csv")) |>
   mutate(id_municipio_6 = as.character(id_municipio_6))
 
 df_rdd <- df_rdd |> 
-  left_join(outros_crimes |> select(feminicidio:id_municipio_6),
+  left_join(outros_crimes |> select(id_municipio_6:tentativa_hom_pc),
             join_by(code_muni==id_municipio_6))
 
 df_rdd <- df_rdd |> 
@@ -328,14 +328,40 @@ ggplot(df_rdd) +
   theme_minimal() +
   theme(legend.position = "right")
 ```
+## Outros crimes
+```{r}
+# Criar histogramas para cada ano
+outros_crimes_long <- df_rdd %>% 
+  filter(name_muni != "Cruzmaltina" & name_muni != "Flórida") |> 
+  select(code_muni, groups, feminicidio_pc:tentativa_hom_pc) %>%
+  pivot_longer(cols = feminicidio_pc:tentativa_hom_pc, names_to = "crime", values_to = "taxa_100mil")
+
+ggplot(outros_crimes_long, aes(x = taxa_100mil, fill = groups)) +
+  geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "black") +
+  facet_wrap(~ crime, scales = "free_x") +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Distribuição das taxas de outros crimes em 2019") +
+  theme_minimal() +
+  labs(x = "Taxa", y = "Frequência", fill = "Grupo")
+```
+## Outros crimes
+
+```{r}
+ggplot(outros_crimes_long, aes(x = crime, y = taxa_100mil, fill = groups)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Comparação das taxas de outros crimes em 2019 por Grupo") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa", fill = "Grupo")
+```
 
 ## Feminicídios
 
 ```{r}
 # Criar um mapa para um ano específico, por exemplo, 2019
-ggplot(df_rdd) +
-  geom_sf(aes(fill = `feminicidio`), color = NA) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Número absoluto") +
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `feminicidio_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
   ggtitle("Número de Feminicídios por Município em 2019") +
   theme_minimal() +
   theme(legend.position = "right")
@@ -345,9 +371,9 @@ ggplot(df_rdd) +
 
 ```{r}
 # Criar um mapa para um ano específico, por exemplo, 2019
-ggplot(df_rdd) +
-  geom_sf(aes(fill = `hom_doloso`), color = NA) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Número absoluto dolosos") +
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `hom_doloso_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
   ggtitle("Número de Homicídios dolosos por Município em 2019") +
   theme_minimal() +
   theme(legend.position = "right")
@@ -357,9 +383,9 @@ ggplot(df_rdd) +
 
 ```{r}
 # Criar um mapa para um ano específico, por exemplo, 2019
-ggplot(df_rdd) +
-  geom_sf(aes(fill = `lesao`), color = NA) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Número absoluto") +
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `lesao_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
   ggtitle("Número de Lesão Corporal seguida de morte por Município em 2019") +
   theme_minimal() +
   theme(legend.position = "right")
@@ -369,9 +395,9 @@ ggplot(df_rdd) +
 
 ```{r}
 # Criar um mapa para um ano específico, por exemplo, 2019
-ggplot(df_rdd) +
-  geom_sf(aes(fill = `mandado`), color = NA) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Número absoluto") +
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `mandado_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
   ggtitle("Número de cumprimentos de Mandados de Prisão por Município em 2019") +
   theme_minimal() +
   theme(legend.position = "right")
@@ -381,9 +407,9 @@ ggplot(df_rdd) +
 
 ```{r}
 # Criar um mapa para um ano específico, por exemplo, 2019
-ggplot(df_rdd) +
-  geom_sf(aes(fill = `transito`), color = NA) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Número absoluto") +
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `transito_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
   ggtitle("Número de mortes do trânsito por Município em 2019") +
   theme_minimal() +
   theme(legend.position = "right")
@@ -393,9 +419,9 @@ ggplot(df_rdd) +
 
 ```{r}
 # Criar um mapa para um ano específico, por exemplo, 2019
-ggplot(df_rdd) +
-  geom_sf(aes(fill = `esclarecer`), color = NA) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Número absoluto") +
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `esclarecer_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
   ggtitle("Número de mortes a esclarecer por Município em 2019") +
   theme_minimal() +
   theme(legend.position = "right")
@@ -405,9 +431,9 @@ ggplot(df_rdd) +
 
 ```{r}
 # Criar um mapa para um ano específico, por exemplo, 2019
-ggplot(df_rdd) +
-  geom_sf(aes(fill = `latrocinio`), color = NA) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Número absoluto") +
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `latrocinio_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
   ggtitle("Número de Latrocínios por Município em 2019") +
   theme_minimal() +
   theme(legend.position = "right")
@@ -417,9 +443,9 @@ ggplot(df_rdd) +
 
 ```{r}
 # Criar um mapa para um ano específico, por exemplo, 2019
-ggplot(df_rdd) +
-  geom_sf(aes(fill = `tentativa_hom`), color = NA) +
-  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Número absoluto") +
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `tentativa_hom_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
   ggtitle("Número de tentativas de homicídio por Município em 2019") +
   theme_minimal() +
   theme(legend.position = "right")
@@ -442,3 +468,46 @@ ggplot(df_rdd) +
 -   Roubo de veículo
 
 -   Tráfico de drogas
+
+## Regressões: Homicídios X grupos
+```{r}
+list(lm(`valor-2010` ~ treated, data = df_rdd),
+     lm(`valor-2011` ~ treated, data = df_rdd),
+     lm(`valor-2012` ~ treated, data = df_rdd),
+     lm(`valor-2013` ~ treated, data = df_rdd),
+     lm(`valor-2014` ~ treated, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Outros crimes X grupos
+```{r}
+list(lm(feminicidio_pc ~ treated, data = df_rdd),
+     lm(hom_doloso_pc ~ treated, data = df_rdd),
+     lm(lesao_pc ~ treated, data = df_rdd),
+     lm(mandado_pc ~ treated, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Outros crimes X grupos
+```{r}
+list(lm(transito_pc ~ treated, data = df_rdd),
+     lm(esclarecer_pc ~ treated, data = df_rdd),
+     lm(latrocinio_pc ~ treated, data = df_rdd),
+     lm(tentativa_hom_pc ~ treated, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Outros crimes X grupos e arcos
+```{r}
+list(lm(feminicidio_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(hom_doloso_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(lesao_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(mandado_pc ~ treated + arcos + treated*arcos, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+
+## Outros crimes X grupos e arcos
+```{r}
+list(lm(transito_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(esclarecer_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(latrocinio_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(tentativa_hom_pc ~ treated + arcos + treated*arcos, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
