@@ -328,7 +328,9 @@ ggplot(df_rdd) +
   theme_minimal() +
   theme(legend.position = "right")
 ```
+
 ## Outros crimes
+
 ```{r}
 # Criar histogramas para cada ano
 outros_crimes_long <- df_rdd %>% 
@@ -344,6 +346,7 @@ ggplot(outros_crimes_long, aes(x = taxa_100mil, fill = groups)) +
   theme_minimal() +
   labs(x = "Taxa", y = "Frequência", fill = "Grupo")
 ```
+
 ## Outros crimes
 
 ```{r}
@@ -470,6 +473,7 @@ ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
 -   Tráfico de drogas
 
 ## Regressões: Homicídios X grupos
+
 ```{r}
 list(lm(`valor-2010` ~ treated, data = df_rdd),
      lm(`valor-2011` ~ treated, data = df_rdd),
@@ -478,7 +482,9 @@ list(lm(`valor-2010` ~ treated, data = df_rdd),
      lm(`valor-2014` ~ treated, data = df_rdd)) %>%
   stargazer(type = "text")
 ```
+
 ## Outros crimes X grupos
+
 ```{r}
 list(lm(feminicidio_pc ~ treated, data = df_rdd),
      lm(hom_doloso_pc ~ treated, data = df_rdd),
@@ -486,7 +492,9 @@ list(lm(feminicidio_pc ~ treated, data = df_rdd),
      lm(mandado_pc ~ treated, data = df_rdd)) %>%
   stargazer(type = "text")
 ```
+
 ## Outros crimes X grupos
+
 ```{r}
 list(lm(transito_pc ~ treated, data = df_rdd),
      lm(esclarecer_pc ~ treated, data = df_rdd),
@@ -494,7 +502,9 @@ list(lm(transito_pc ~ treated, data = df_rdd),
      lm(tentativa_hom_pc ~ treated, data = df_rdd)) %>%
   stargazer(type = "text")
 ```
+
 ## Outros crimes X grupos e arcos
+
 ```{r}
 list(lm(feminicidio_pc ~ treated + arcos + treated*arcos, data = df_rdd),
      lm(hom_doloso_pc ~ treated + arcos + treated*arcos, data = df_rdd),
@@ -504,10 +514,93 @@ list(lm(feminicidio_pc ~ treated + arcos + treated*arcos, data = df_rdd),
 ```
 
 ## Outros crimes X grupos e arcos
+
 ```{r}
 list(lm(transito_pc ~ treated + arcos + treated*arcos, data = df_rdd),
      lm(esclarecer_pc ~ treated + arcos + treated*arcos, data = df_rdd),
      lm(latrocinio_pc ~ treated + arcos + treated*arcos, data = df_rdd),
      lm(tentativa_hom_pc ~ treated + arcos + treated*arcos, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+
+## Homicídios X grupos e estados
+
+```{r}
+list(lm(`valor-2010` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2011` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2012` ~ treated+abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Homicídios X grupos e estados
+```{r}
+list(lm(`valor-2013` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2014` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2015` ~ treated+abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Homicídios X grupos e estados
+```{r}
+list(lm(`valor-2016` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2017` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2018` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2019` ~ treated+abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Homicídios X grupos e estados e interação
+
+```{r}
+list(lm(`valor-2010` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2011` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2012` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Homicídios X grupos e estados e interação
+```{r}
+list(lm(`valor-2013` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2014` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2015` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Homicídios X grupos e estados e interação
+```{r}
+list(lm(`valor-2016` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2017` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2018` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2019` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+
+
+
+## Outros crimes X grupos e estados
+```{r}
+list(lm(feminicidio_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(hom_doloso_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(lesao_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(mandado_pc ~ treated + abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Outros crimes X grupos e estados
+```{r}
+list(lm(transito_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(esclarecer_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(latrocinio_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(tentativa_hom_pc ~ treated + abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Outros crimes X grupos e estados e interação
+```{r}
+list(lm(feminicidio_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(hom_doloso_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(lesao_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(mandado_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
+  stargazer(type = "text")
+```
+## Outros crimes X grupos e estados e interação
+```{r}
+list(lm(transito_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(esclarecer_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(latrocinio_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(tentativa_hom_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
   stargazer(type = "text")
 ```
