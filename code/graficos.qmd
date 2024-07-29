@@ -1,8 +1,7 @@
 ---
 title: "Gráficos"
 author: "Victor Batista"
-format: revealjs
-embed-resources: TRUE
+format: beamer
 editor: visual
 execute: 
   echo: false
