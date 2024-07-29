@@ -1,0 +1,604 @@
+---
+title: "Gráficos"
+author: "Victor Batista"
+format: beamer
+editor: visual
+execute: 
+  echo: false
+  warnings: false
+---
+
+```{r, include=FALSE}
+dropbox <- "c:/Users/victor/dropbox/DISSERTACAO"
+
+library("sf")
+library("SpatialRDD")
+library("tidyverse")
+library("stargazer")
+library("tmap")
+library("rdrobust")
+library("lfe")
+library("geobr")
+library("summarytools")
+library("knitr")
+library("kableExtra")
+library("gifski")
+library("readxl")
+library("modelsummary")
+
+```
+
+```{r, include=FALSE}
+#Lê os shapefiles
+fronteira <- st_read(file.path(dropbox,"Fronteira/Faixa_de_Fronteira_por_UF_2022.shp")) %>%
+  st_transform("WGS84")
+
+#Uniformiza a faixa de fronteira como uma única região
+linha_fronteira <- fronteira %>%
+  mutate(pais = "BR") %>% 
+  group_by(pais) %>% 
+  summarise()
+
+#Carrega sf dos municípios brasileiros
+municipios <- read_municipality(year=2020, showProgress = T) %>%
+  st_transform("WGS84")
+
+#Carrega o sf dos países da América do Sul
+america <- st_read(file.path(dropbox,"America/South_America.shp")) %>% 
+  st_transform("WGS84")
+
+#Carrega o sf dos municípios da faixa de fronteira
+municipios_fronteira <- st_read(file.path(dropbox,"Municipios_Fronteira/Municipios_Faixa_Fronteira_2022.shp")) %>%
+  st_transform("WGS84")
+
+# Estabelece a nova proposta de faixa de fronteira
+linha_fronteira_300km <- st_buffer(linha_fronteira, dist = 150000)
+
+# Verifica municípios que passam a pertencer à região
+# Adiciona variável de intercessão
+municipios$inter <- st_intersects(municipios, linha_fronteira_300km, sparse = F)
+
+# Adiciona variável de pertencimento à fronteira original
+municipios <- municipios %>%
+  mutate(fronteira = ifelse(code_muni %in% municipios_fronteira$CD_MUN, 1, 0))
+```
+
+```{r, include=FALSE}
+# Cria tratamento e controle
+df <- municipios |>
+  #filtra os municípios na nova faixa
+  filter(inter == T) |> 
+  # cria o grupo de tratamento e controle
+  mutate(treated = ifelse(code_muni %in% municipios_fronteira$CD_MUN, 1, 0),
+         groups = ifelse(treated == 1, "treatment", "control"),
+         # cria os arcos
+         arcos = case_when(abbrev_state %in% c("AP", "PA", "AM", "AC", "RR") ~ "Arco Norte",
+                           abbrev_state %in% c("RO", "MS", "MT") ~ "Arco Central",
+                           abbrev_state %in% c("PR", "SC", "RS") ~ "Arco Sul")) |> 
+  # exclui a variável classificatória. as recém criadas a substituem
+  dplyr::select(-inter)
+
+# prepara a tabela da fronteira para mergir com a df principal (municipios)
+t <- municipios_fronteira |> 
+  # remove colunas indesejadas
+  select(-c("NM_REGIAO", "CD_UF", "NM_UF", "SIGLA_UF", "NM_MUN", "geometry")) |> 
+  # padroniza o nome code_muni
+  rename("code_muni" = "CD_MUN") |> 
+  # altera o tipo das colunas para numeric e logic
+  mutate(code_muni = as.numeric(code_muni),
+         CID_GEMEA = ifelse(is.na(CID_GEMEA) == F, 1, 0))
+
+# remove o componente gráfico
+st_geometry(t) <- NULL
+
+# realiza o join
+df <- dplyr::left_join(df, t, by = "code_muni")
+rm(t)
+
+# prepara a tabela da sede dos mun da faixa da fronteira para mergir com a df principal (municipios)
+sede_municipios <- st_read(file.path(dropbox,"Sedes_Municipios_Faixa_de_Fronteira_Cidades_Gemeas_2022_shp/Sedes_Municipios_Faixa_de_Fronteira_Cidades_Gemeas_2022.shp")) %>%
+  st_transform("WGS84")
+
+t <- sede_municipios %>%
+  # seleciona colunas desejadas
+  select(c("CD_MUN", "FAIXA_SEDE")) %>%
+  # harmoniza os nomes de variáveis
+  rename("code_muni" = "CD_MUN") %>%
+  # modifica a classe da variável
+  mutate(code_muni = as.numeric(code_muni),
+         FAIXA_SEDE = ifelse(FAIXA_SEDE == "sim", 1, 0))
+
+# remove a geometria da tabela para realizar o join
+st_geometry(t) <- NULL
+
+# realiza o join
+df <- dplyr::left_join(df, t, by = "code_muni")
+rm(t)
+
+# prepara para juntar demais países da américa do sul na base de municípios
+# Remove regiões sem fronteira com o br
+america2 <- america %>%
+  filter(!(COUNTRY %in% c("Brazil", "Falkland Islands (UK)",
+                          "South Georgia and the South Sandwich Is (UK)", "Chile", "Ecuador")))
+
+# verifica interseções
+a <- st_intersects(df, america2, sparse = FALSE)
+
+# renomeia colunas e cria variáveis dummy
+a <- as.data.frame(a) %>%
+  rename("Argentina" = "V1",
+         "Bolivia" = "V2",
+         "Colombia" = "V3",
+         "French_Guiana" = "V4",
+         "Guyana" = "V5",
+         "Suriname" = "V6",
+         "Paraguay" = "V7",
+         "Peru" = "V8",
+         "Uruguay" = "V9",
+         "Venezuela" = "V10") %>%
+  mutate(Argentina = ifelse(Argentina == T, 1, 0),
+         Bolivia = ifelse(Bolivia == T, 1, 0),
+         Colombia = ifelse(Colombia == T, 1, 0),
+         French_Guiana = ifelse(French_Guiana == T, 1, 0),
+         Guyana = ifelse(Guyana == T, 1, 0),
+         Suriname = ifelse(Suriname == T, 1, 0),
+         Paraguay = ifelse(Paraguay == T, 1, 0),
+         Peru = ifelse(Peru == T, 1, 0),
+         Uruguay = ifelse(Uruguay == T, 1, 0),
+         Venezuela = ifelse(Venezuela == T, 1, 0))
+
+df <- cbind(df, a)
+rm(a)
+```
+
+## Mapa por grupos
+
+```{r}
+tm_shape(df) + tm_polygons(col = "groups")
+```
+
+## Mapa por arcos
+
+```{r}
+tm_shape(df) + tm_polygons(col = "arcos")
+```
+
+# Análise exploratória
+
+```{r, include=FALSE}
+base_homicidios <- read_excel(file.path(dropbox, "Base_homicidios.xlsx"))
+base_homicidios <- base_homicidios %>%
+  separate(Município, c("code_muni", "name_muni"), sep = 7) %>%
+  separate(code_muni, c("code_muni", NA), sep = -1) %>%
+  select(-name_muni)
+
+df_rdd <- df %>%
+  separate(code_muni, c("code_muni", NA), sep = -1)
+
+df_rdd <- left_join(df_rdd, base_homicidios, by = "code_muni") %>%
+  mutate(`Porcentagem_Homens_Jovens` = as.numeric(`Porcentagem_Homens_Jovens`))
+
+outros_crimes <- read_csv(file.path(dropbox, "municipal_MSP.csv")) |> 
+  mutate(id_municipio_6 = as.character(id_municipio_6))
+
+df_rdd <- df_rdd |> 
+  left_join(outros_crimes |> select(id_municipio_6:tentativa_hom_pc),
+            join_by(code_muni==id_municipio_6))
+
+df_rdd <- df_rdd |> 
+  mutate(
+   code_muni = as.character(code_muni),
+   name_muni = as.character(name_muni),
+   code_state = as.character(code_state),
+   abbrev_state = as.character(abbrev_state),
+   name_state = as.character(name_state),
+   code_region = as.character(code_region),
+   name_region = as.character(name_region),
+   fronteira = as.logical(fronteira),
+   treated = as.logical(treated),
+   groups = as.character(groups),
+   arcos = as.character(arcos),
+   AREA_TOT = as.character(AREA_TOT),
+   AREA_INT = as.character(AREA_INT),
+   PORC_INT = as.character(PORC_INT),
+   CID_GEMEA = as.logical(CID_GEMEA),
+   FAIXA_SEDE = as.logical(FAIXA_SEDE),
+   Argentina = as.logical(Argentina),
+   Bolivia = as.logical(Bolivia),
+   Colombia = as.logical(Colombia),
+   French_Guiana = as.logical(French_Guiana),
+   Guyana = as.logical(Guyana),
+   Suriname = as.logical(Suriname),
+   Paraguay = as.logical(Paraguay),
+   Peru = as.logical(Peru),
+   Uruguay = as.logical(Uruguay),
+   Venezuela = as.logical(Venezuela)
+  )
+```
+
+## Estatísticas descritivas
+
+```{r}
+library(skimr)
+library(GGally)
+datasummary_skim(df_rdd)
+```
+
+## Distribuição
+
+```{r}
+ggplot(df, aes(x = groups)) +
+    geom_bar(fill = "skyblue", color = "black") +
+  ggtitle("Distribuição dos Grupos (Tratamento vs Controle)")
+```
+
+## Analfabetismo
+
+```{r}
+# Gráfico de distribuição da Taxa de Analfabetismo para tratamento e controle
+ggplot(df_rdd, aes(x = Taxa_de_analfabetismo, fill = groups)) +
+  geom_histogram(aes(y = ..density..), position = 'identity', bins = 30, alpha = 0.5, color = "black") +
+  geom_density(aes(color = groups), size = 1, fill = NA) +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  scale_color_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Distribuição da Taxa de Analfabetismo por Grupo (Tratamento vs Controle)") +
+  theme_minimal() +
+  labs(x = "Taxa de Analfabetismo", y = "Densidade", fill = "Grupo", color = "Grupo")
+```
+
+## Analfabetismo
+
+```{r}
+# Boxplot comparando Taxa de Analfabetismo entre grupos
+ggplot(df_rdd, aes(x = groups, y = Taxa_de_analfabetismo)) +
+  geom_boxplot(fill = "skyblue", color = "black") +
+  ggtitle("Taxa de Analfabetismo por Grupo")
+```
+
+## Gini
+
+```{r}
+# Scatter plot entre PIB per capita e Gini
+ggplot(df_rdd, aes(x = PIB_per_capita, y = Gini, color = groups)) +
+  geom_point(size = 2) +
+  ggtitle("PIB per capita vs Gini por Grupo")
+```
+
+## Desemprego
+
+```{r}
+# Boxplot de Taxa de desemprego por grupo
+ggplot(df_rdd, aes(x = groups, y = `Taxa_de_desemprego_16a_e+`)) +
+  geom_boxplot(fill = "skyblue", color = "black") +
+  ggtitle("Taxa de Desemprego por Grupo")
+```
+
+## Homicídios
+
+```{r}
+options(width = 60)
+
+# Selecionar colunas de interesse
+taxa_homicidios <- df_rdd |> 
+  select(`valor-2010`:`valor-2019`)
+
+datasummary_skim(taxa_homicidios)
+```
+
+## Homicídios
+
+```{r}
+# Criar histogramas para cada ano
+taxa_homicidios_long <- df_rdd %>% 
+  select(code_muni, groups, `valor-2010`:`valor-2019`) %>%
+  pivot_longer(cols = `valor-2010`:`valor-2019`, names_to = "year", values_to = "taxa_homicidio")
+
+ggplot(taxa_homicidios_long, aes(x = taxa_homicidio, fill = groups)) +
+  geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "black") +
+  facet_wrap(~ year, scales = "free_x") +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Distribuição das Taxas de Homicídio de 2010 a 2019") +
+  theme_minimal() +
+  labs(x = "Taxa de Homicídio", y = "Frequência", fill = "Grupo")
+```
+
+## Homicídios
+
+```{r}
+# Criar boxplots para comparar grupos
+ggplot(taxa_homicidios_long, aes(x = year, y = taxa_homicidio, fill = groups)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Comparação das Taxas de Homicídio de 2010 a 2019 por Grupo") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa de Homicídio", fill = "Grupo")
+```
+
+## Homicídios
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd) +
+  geom_sf(aes(fill = `valor-2019`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Taxa de Homicídio") +
+  ggtitle("Taxa de Homicídios por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+## Outros crimes
+
+```{r}
+# Criar histogramas para cada ano
+outros_crimes_long <- df_rdd %>% 
+  filter(name_muni != "Cruzmaltina" & name_muni != "Flórida") |> 
+  select(code_muni, groups, feminicidio_pc:tentativa_hom_pc) %>%
+  pivot_longer(cols = feminicidio_pc:tentativa_hom_pc, names_to = "crime", values_to = "taxa_100mil")
+
+ggplot(outros_crimes_long, aes(x = taxa_100mil, fill = groups)) +
+  geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "black") +
+  facet_wrap(~ crime, scales = "free_x") +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Distribuição das taxas de outros crimes em 2019") +
+  theme_minimal() +
+  labs(x = "Taxa", y = "Frequência", fill = "Grupo")
+```
+
+## Outros crimes
+
+```{r}
+ggplot(outros_crimes_long, aes(x = crime, y = taxa_100mil, fill = groups)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_manual(values = c("treatment" = "blue", "control" = "red")) +
+  ggtitle("Comparação das taxas de outros crimes em 2019 por Grupo") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa", fill = "Grupo")
+```
+
+## Feminicídios
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `feminicidio_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
+  ggtitle("Número de Feminicídios por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+## Homicídio doloso
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `hom_doloso_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
+  ggtitle("Número de Homicídios dolosos por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+## Lesão seguida de morte
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `lesao_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
+  ggtitle("Número de Lesão Corporal seguida de morte por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+## Mandados de prisão
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `mandado_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
+  ggtitle("Número de cumprimentos de Mandados de Prisão por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+## Mortes no trânsito
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `transito_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
+  ggtitle("Número de mortes do trânsito por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+## Mortes a esclarecer
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `esclarecer_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
+  ggtitle("Número de mortes a esclarecer por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+## Latrocínio
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `latrocinio_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
+  ggtitle("Número de Latrocínios por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+## Tentativa de homicídio
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = `tentativa_hom_pc`), color = NA) +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Qtde por 100 mil hab") +
+  ggtitle("Número de tentativas de homicídio por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+## Regressões: Homicídios X grupos
+
+```{r}
+
+
+list("hom 2010" = lm(`valor-2010` ~ treated, data = df_rdd),
+     "hom 2011" = lm(`valor-2011` ~ treated, data = df_rdd),
+     "hom 2012" = lm(`valor-2012` ~ treated, data = df_rdd),
+     "hom 2013" = lm(`valor-2013` ~ treated, data = df_rdd),
+     "hom 2014" = lm(`valor-2014` ~ treated, data = df_rdd)) %>%
+  modelsummary(stars = T)
+```
+
+## Outros crimes X grupos
+
+```{r}
+list(lm(feminicidio_pc ~ treated, data = df_rdd),
+     lm(hom_doloso_pc ~ treated, data = df_rdd),
+     lm(lesao_pc ~ treated, data = df_rdd),
+     lm(mandado_pc ~ treated, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Outros crimes X grupos
+
+```{r}
+list(lm(transito_pc ~ treated, data = df_rdd),
+     lm(esclarecer_pc ~ treated, data = df_rdd),
+     lm(latrocinio_pc ~ treated, data = df_rdd),
+     lm(tentativa_hom_pc ~ treated, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Outros crimes X grupos e arcos
+
+```{r}
+list(lm(feminicidio_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(hom_doloso_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(lesao_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(mandado_pc ~ treated + arcos + treated*arcos, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Outros crimes X grupos e arcos
+
+```{r}
+list(lm(transito_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(esclarecer_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(latrocinio_pc ~ treated + arcos + treated*arcos, data = df_rdd),
+     lm(tentativa_hom_pc ~ treated + arcos + treated*arcos, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Homicídios X grupos e estados
+
+```{r}
+list(lm(`valor-2010` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2011` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2012` ~ treated+abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Homicídios X grupos e estados
+
+```{r}
+list(lm(`valor-2013` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2014` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2015` ~ treated+abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Homicídios X grupos e estados
+
+```{r}
+list(lm(`valor-2016` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2017` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2018` ~ treated+abbrev_state, data = df_rdd),
+     lm(`valor-2019` ~ treated+abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Homicídios X grupos e estados e interação
+
+```{r}
+list(lm(`valor-2010` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2011` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2012` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Homicídios X grupos e estados e interação
+
+```{r}
+list(lm(`valor-2013` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2014` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2015` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Homicídios X grupos e estados e interação
+
+```{r}
+list(lm(`valor-2016` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2017` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2018` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(`valor-2019` ~ treated+abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Outros crimes X grupos e estados
+
+```{r}
+list(lm(feminicidio_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(hom_doloso_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(lesao_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(mandado_pc ~ treated + abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Outros crimes X grupos e estados
+
+```{r}
+list(lm(transito_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(esclarecer_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(latrocinio_pc ~ treated + abbrev_state, data = df_rdd),
+     lm(tentativa_hom_pc ~ treated + abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Outros crimes X grupos e estados e interação
+
+```{r}
+list(lm(feminicidio_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(hom_doloso_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(lesao_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(mandado_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd)) %>%
+  modelsummary()
+```
+
+## Outros crimes X grupos e estados e interação
+
+```{r}
+library("flextable")
+options(width = 60)
+
+list(lm(transito_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(esclarecer_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(latrocinio_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd),
+     lm(tentativa_hom_pc ~ treated + abbrev_state + treated*abbrev_state, data = df_rdd)) |> 
+  modelsummary(stars = T, output = "latex")
+
+```
