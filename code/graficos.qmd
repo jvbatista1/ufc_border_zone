@@ -472,6 +472,7 @@ ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
   theme_minimal() +
   theme(legend.position = "right")
 ```
+
 ## Regressões: Homicídios X grupos
 
 ```{r}
