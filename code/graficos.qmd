@@ -74,7 +74,8 @@ df <- municipios |>
          # cria os arcos
          arcos = case_when(abbrev_state %in% c("AP", "PA", "AM", "AC", "RR") ~ "Arco Norte",
                            abbrev_state %in% c("RO", "MS", "MT") ~ "Arco Central",
-                           abbrev_state %in% c("PR", "SC", "RS") ~ "Arco Sul")) |> 
+                           abbrev_state %in% c("PR", "SC", "RS") ~ "Arco Sul",
+                           abbrev_state %in% c("SP") ~ "Arco Sudeste")) |> 
   # exclui a variável classificatória. as recém criadas a substituem
   dplyr::select(-inter)
 
@@ -219,9 +220,7 @@ df_rdd <- df_rdd |>
 ## Estatísticas descritivas
 
 ```{r}
-library(skimr)
-library(GGally)
-datasummary_skim(df_rdd)
+datasummary_skim(df_rdd, type = "all", output = "default")
 ```
 
 ## Distribuição
@@ -282,7 +281,23 @@ options(width = 60)
 taxa_homicidios <- df_rdd |> 
   select(`valor-2010`:`valor-2019`)
 
+taxa_homicidios2 <- df_rdd |> 
+  select(`valor-2010`:`valor-2019`) |> 
+  filter(`valor-2010` != 0) |> 
+  filter(`valor-2011` != 0) |> 
+  filter(`valor-2012` != 0) |> 
+  filter(`valor-2013` != 0) |> 
+  filter(`valor-2014` != 0) |> 
+  filter(`valor-2015` != 0) |> 
+  filter(`valor-2016` != 0) |> 
+  filter(`valor-2017` != 0) |> 
+  filter(`valor-2018` != 0) |> 
+  filter(`valor-2019` != 0)
+  
+
 datasummary_skim(taxa_homicidios)
+datasummary_skim(taxa_homicidios2)
+
 ```
 
 ## Homicídios
@@ -293,6 +308,11 @@ taxa_homicidios_long <- df_rdd %>%
   select(code_muni, groups, `valor-2010`:`valor-2019`) %>%
   pivot_longer(cols = `valor-2010`:`valor-2019`, names_to = "year", values_to = "taxa_homicidio")
 
+taxa_homicidios_long_semzeros <- df_rdd %>% 
+  select(code_muni, groups, `valor-2010`:`valor-2019`) %>%
+  pivot_longer(cols = `valor-2010`:`valor-2019`, names_to = "year", values_to = "taxa_homicidio") |> 
+  filter(taxa_homicidio != 0)
+
 ggplot(taxa_homicidios_long, aes(x = taxa_homicidio, fill = groups)) +
   geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "black") +
   facet_wrap(~ year, scales = "free_x") +
@@ -300,6 +320,8 @@ ggplot(taxa_homicidios_long, aes(x = taxa_homicidio, fill = groups)) +
   ggtitle("Distribuição das Taxas de Homicídio de 2010 a 2019") +
   theme_minimal() +
   labs(x = "Taxa de Homicídio", y = "Frequência", fill = "Grupo")
+
+
 ```
 
 ## Homicídios
