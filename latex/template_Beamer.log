@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.8.2)  2 AUG 2024 21:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.8.2)  3 AUG 2024 19:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -763,32 +763,356 @@ default.sty
 )
 (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beameroutertheme
 default.sty)))
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\adjustbox.sty
+Package: adjustbox 2022/10/17 v1.3a Adjusting TeX boxes (trim, clip, ...)
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkeyval.tex
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/generic/xkeyval\xkvutils.tex
+\XKV@toks=\toks46
+\XKV@tempa@toks=\toks47
+)
+\XKV@depth=\count343
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
+-ends (calc, etex, pgfmath)
+)
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\trimclip.sty
+Package: trimclip 2020/08/19 v1.2 Trim and clip general TeX material
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/collectbox\collectbox.s
+ty
+Package: collectbox 2022/10/17 v0.4c Collect macro arguments as boxes
+\collectedbox=\box77
+)
+\tc@llx=\dimen295
+\tc@lly=\dimen296
+\tc@urx=\dimen297
+\tc@ury=\dimen298
+Package trimclip Info: Using driver 'tc-pdftex.def'.
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/adjustbox\tc-pdftex.def
+File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
+))
+\adjbox@Width=\dimen299
+\adjbox@Height=\dimen300
+\adjbox@Depth=\dimen301
+\adjbox@Totalheight=\dimen302
+\adjbox@pwidth=\dimen303
+\adjbox@pheight=\dimen304
+\adjbox@pdepth=\dimen305
+\adjbox@ptotalheight=\dimen306
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/ifoddpage\ifoddpage.sty
+Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
+\c@checkoddpage=\count344
+) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/varwidth\varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box78
+\sift@deathcycles=\count345
+\@vwid@loff=\dimen307
+\@vwid@roff=\dimen308
+))
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/tabularray\tabularray.s
+ty (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
+Package: expl3 2024-05-27 L3 programming layer (loader) 
+
 (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count343
-\l__pdf_internal_box=\box77
-) (template_Beamer.aux)
+\l__color_backend_stack_int=\count346
+\l__pdf_internal_box=\box79
+))
+Package: tabularray 2024-02-16 v2024A Typeset tabulars and arrays with LaTeX3
+\l__tblr_a_int=\count347
+\l__tblr_c_int=\count348
+\l__tblr_r_int=\count349
+\l__tblr_d_dim=\dimen309
+\l__tblr_h_dim=\dimen310
+\l__tblr_o_dim=\dimen311
+\l__tblr_p_dim=\dimen312
+\l__tblr_q_dim=\dimen313
+\l__tblr_r_dim=\dimen314
+\l__tblr_s_dim=\dimen315
+\l__tblr_t_dim=\dimen316
+\l__tblr_v_dim=\dimen317
+\l__tblr_w_dim=\dimen318
+\l__tblr_a_box=\box80
+\l__tblr_b_box=\box81
+\l__tblr_c_box=\box82
+\l__tblr_d_box=\box83
+\g__tblr_table_count_int=\count350
+\c@rownum=\count351
+\c@colnum=\count352
+\c@rowcount=\count353
+\c@colcount=\count354
+\abovesep=\dimen319
+\belowsep=\dimen320
+\leftsep=\dimen321
+\rightsep=\dimen322
+\g_tblr_level_int=\count355
+\g__tblr_data_row_key_count_int=\count356
+\g__tblr_data_column_key_count_int=\count357
+\g__tblr_data_cell_key_count_int=\count358
+\g__tblr_array_int=\count359
+\l__tblr_key_count_int=\count360
+\l__tblr_key_quotient_int=\count361
+\l__tblr_key_quotient_two_int=\count362
+\l__tblr_key_remainder_int=\count363
+\g__tblr_data_str_value_count_int=\count364
+\rulewidth=\dimen323
+\l__tblr_strut_dp_dim=\dimen324
+\l__tblr_strut_ht_dim=\dimen325
+\g__tblr_cell_wd_dim=\dimen326
+\g__tblr_cell_ht_dim=\dimen327
+\g__tblr_cell_head_dim=\dimen328
+\g__tblr_cell_foot_dim=\dimen329
+\l__column_target_dim=\dimen330
+\l__tblr_caption_box=\box84
+\l__tblr_caption_left_box=\box85
+\l__tblr_row_head_box=\box86
+\l__tblr_row_foot_box=\box87
+\l__tblr_row_head_foot_dim=\dimen331
+\tablewidth=\dimen332
+\l__tblr_table_firsthead_box=\box88
+\l__tblr_table_middlehead_box=\box89
+\l__tblr_table_lasthead_box=\box90
+\l__tblr_table_firstfoot_box=\box91
+\l__tblr_table_middlefoot_box=\box92
+\l__tblr_table_lastfoot_box=\box93
+\l__tblr_remain_height_dim=\dimen333
+\l__tblr_long_from_int=\count365
+\l__tblr_long_to_int=\count366
+\l__tblr_curr_i_int=\count367
+\l__tblr_prev_i_int=\count368
+\l__tblr_table_page_int=\count369
+\l__tblr_table_head_box=\box94
+\l__tblr_table_foot_box=\box95
+\l__tblr_table_head_foot_dim=\dimen334
+\l__tblr_table_head_body_foot_dim=\dimen335
+\l__tblr_table_box=\box96
+\l__tblr_table_hlines_box=\box97
+\l__tblr_hline_box=\box98
+\l__tblr_row_box=\box99
+\l__tblr_col_o_wd_dim=\dimen336
+\l__tblr_col_b_wd_dim=\dimen337
+\l__tblr_hline_leftskip_dim=\dimen338
+\l__tblr_hline_rightskip_dim=\dimen339
+\l__tblr_row_ht_dim=\dimen340
+\l__tblr_row_dp_dim=\dimen341
+\l__tblr_row_abovesep_dim=\dimen342
+\l__tblr_row_belowsep_dim=\dimen343
+\l__tblr_row_vlines_box=\box100
+\l__tblr_vline_box=\box101
+\l__tblr_cell_box=\box102
+\l__row_upper_dim=\dimen344
+\l__row_lower_dim=\dimen345
+\l__row_vpace_dim=\dimen346
+\l__tblr_vline_aboveskip_dim=\dimen347
+\l__tblr_vline_belowskip_dim=\dimen348
+\l__tblr_cell_wd_dim=\dimen349
+\l__tblr_cell_ht_dim=\dimen350
+\l__tblr_diag_box=\box103
+)
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count370
+\float@exts=\toks48
+\float@box=\box104
+\@float@everytoks=\toks49
+\@floatcapt=\box105
+)
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/codehigh\codehigh.sty
+Package: codehigh 2023-02-11 v2023A Highlight codes and demos with l3regex and 
+lpeg
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/generic/catchfile\catchfile.s
+ty
+Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/generic/etexcmds\etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+))
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/ninecolors\ninecolors.s
+ty
+Package: ninecolors 2022-02-13 v2022D Select colors with proper color contrast
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xpars
+e.sty
+Package: xparse 2024-05-08 L3 Experimental document command parser
+))
+\l__codehigh_a_int=\count371
+\l__codehigh_b_int=\count372
+\l__codehigh_main_boxsep_dim=\dimen351
+\g__codehigh_code_box=\box106
+\g__codehigh_demo_box=\box107
+\l__codehigh_latex_rule_count_int=\count373
+\l__codehigh_latex/math_rule_count_int=\count374
+\l__codehigh_latex/table_rule_count_int=\count375
+\l__codehigh_latex/latex2_rule_count_int=\count376
+\l__codehigh_latex/latex3_rule_count_int=\count377
+\l__codehigh_item_count_int=\count378
+) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/ulem\ulem.sty
+\UL@box=\box108
+\UL@hyphenbox=\box109
+\UL@skip=\skip66
+\UL@hook=\toks50
+\UL@height=\dimen352
+\UL@pe=\count379
+\UL@pixel=\dimen353
+\ULC@box=\box110
+Package: ulem 2019/11/18
+\ULdepth=\dimen354
+)
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/anyfontsize\anyfontsize
+.sty
+Package: anyfontsize 2007/11/22 anyfontsize.sty by pts
+)
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen355
+\lightrulewidth=\dimen356
+\cmidrulewidth=\dimen357
+\belowrulesep=\dimen358
+\belowbottomsep=\dimen359
+\aboverulesep=\dimen360
+\abovetopsep=\dimen361
+\cmidrulesep=\dimen362
+\cmidrulekern=\dimen363
+\defaultaddspace=\dimen364
+\@cmidla=\count380
+\@cmidlb=\count381
+\@aboverulesep=\dimen365
+\@belowrulesep=\dimen366
+\@thisruleclass=\count382
+\@lastruleclass=\count383
+\@thisrulewidth=\dimen367
+)
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/siunitx\siunitx.sty
+Package: siunitx 2024-06-24 v3.3.19 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count384
+\l__siunitx_number_exponent_fixed_int=\count385
+\l__siunitx_number_min_decimal_int=\count386
+\l__siunitx_number_min_integer_int=\count387
+\l__siunitx_number_round_precision_int=\count388
+\l__siunitx_number_lower_threshold_int=\count389
+\l__siunitx_number_upper_threshold_int=\count390
+\l__siunitx_number_group_first_int=\count391
+\l__siunitx_number_group_size_int=\count392
+\l__siunitx_number_group_minimum_int=\count393
+\l__siunitx_angle_tmp_dim=\dimen368
+\l__siunitx_angle_marker_box=\box111
+\l__siunitx_angle_unit_box=\box112
+\l__siunitx_compound_count_int=\count394
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/translations\translatio
+ns.sty
+Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages
+ (CN)
+)
+\l__siunitx_table_tmp_box=\box113
+\l__siunitx_table_tmp_dim=\dimen369
+\l__siunitx_table_column_width_dim=\dimen370
+\l__siunitx_table_integer_box=\box114
+\l__siunitx_table_decimal_box=\box115
+\l__siunitx_table_uncert_box=\box116
+\l__siunitx_table_before_box=\box117
+\l__siunitx_table_after_box=\box118
+\l__siunitx_table_before_dim=\dimen371
+\l__siunitx_table_carry_dim=\dimen372
+\l__siunitx_unit_tmp_int=\count395
+\l__siunitx_unit_position_int=\count396
+\l__siunitx_unit_total_int=\count397
+ (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
+Package: array 2024/06/14 v2.6d Tabular extension package (FMi)
+\col@sep=\dimen373
+\ar@mcellbox=\box119
+\extrarowheight=\dimen374
+\NC@list=\toks51
+\extratabsurround=\skip67
+\backup@length=\skip68
+\ar@cellbox=\box120
+))
+Package translations Info: No language package found. I am going to use `englis
+h' as default language. on input line 21.
+ (template_Beamer.aux
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+
+LaTeX Warning: Label `fig:histoghom' multiply defined.
+
+(tables/reg_hom_1.aux) (tables/reg_hom_2.aux) (tables/reg_hom_3.aux)
+(tables/reg_hom_4.aux) (tables/outros_crimes_1.aux) (tables/outros_crimes_2.aux
+) (tables/outros_crimes_3.aux) (tables/outros_crimes_4.aux))
 \openout1 = `template_Beamer.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 6.
-LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -828,17 +1152,17 @@ LaTeX Font Info:    ... okay on input line 6.
 (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count344
-\scratchdimen=\dimen295
-\scratchbox=\box78
-\nofMPsegments=\count345
-\nofMParguments=\count346
-\everyMPshowfont=\toks46
-\MPscratchCnt=\count347
-\MPscratchDim=\dimen296
-\MPnumerator=\count348
-\makeMPintoPDFobject=\count349
-\everyMPtoPDFconversion=\toks47
+\scratchcounter=\count398
+\scratchdimen=\dimen375
+\scratchbox=\box121
+\nofMPsegments=\count399
+\nofMParguments=\count400
+\everyMPshowfont=\toks52
+\MPscratchCnt=\count401
+\MPscratchDim=\dimen376
+\MPnumerator=\count402
+\makeMPintoPDFobject=\count403
+\everyMPtoPDFconversion=\toks53
 )
 (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
 ase.sty
@@ -850,63 +1174,63 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 6.
+Package hyperref Info: Link coloring OFF on input line 21.
  (template_Beamer.out) (template_Beamer.out)
 \@outlinefile=\write5
 \openout5 = `template_Beamer.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 6.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 21.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 6.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 21.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 6.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 6.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 6.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 6.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 6.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 21.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 6.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 6.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 6.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 21.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 6.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 6.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 6.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 21.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 6.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 6.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 21.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 6.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 21.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 6.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 6.
+(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 6.
+(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 6.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 6.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 21.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 6.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 6.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 21.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 21.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 6
-.
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 2
+1.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 6
-.
+(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 2
+1.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 6.
+ut line 21.
 
 (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-b
 asic-dictionary-English.dict
@@ -931,13 +1255,570 @@ Dictionary: translator-numbers-dictionary, Language: English
 (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/translator\translator-t
 heorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-) (template_Beamer.nav)
+)
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\tran
+slations-basic-dictionary-english.trsl
+File: translations-basic-dictionary-english.trsl (english translation file `tra
+nslations-basic-dictionary')
+)
+Package translations Info: loading dictionary `translations-basic-dictionary' f
+or `english'. on input line 21.
+ (template_Beamer.nav)
 
 [1
 
 {C:/Users/victo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+
+
+Package tabularray Warning: Table width is too small, need 69.1239pt more!
+
+> Step: build the whole table.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 57.
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 57.
+
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
+ut line 57.
+
+(C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/sansmathaccent\ot1mathk
+erncmss.fd
+File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
+thkerncmss.
+)
+Overfull \hbox (69.1239pt too wide) in paragraph at lines 57--57
+ [] 
+ []
+
+
 
 [2
+
+]
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+
+
+[3
+
+]
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+
+
+Package tabularray Warning: Table width is too small, need 9.17549pt more!
+
+> Step: build the whole table.
+
+Overfull \hbox (9.17549pt too wide) in paragraph at lines 127--127
+ [] 
+ []
+
+
+
+[4
+
+]
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+
+
+[5
+
+]
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+
+
+[6
+
+]
+<figures/histog_hom.jpg, id=168, 3793.17125pt x 2723.17375pt>
+File: figures/histog_hom.jpg Graphic file (type jpg)
+<use figures/histog_hom.jpg>
+Package pdftex.def Info: figures/histog_hom.jpg  used on input line 196.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+
+[7
+
+ <./figures/histog_hom.jpg>]
+<figures/boxplot_hom.jpg, id=196, 3793.17125pt x 2723.17375pt>
+File: figures/boxplot_hom.jpg Graphic file (type jpg)
+<use figures/boxplot_hom.jpg>
+Package pdftex.def Info: figures/boxplot_hom.jpg  used on input line 205.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.205 \end{frame}
+                 
+
+[8
+
+ <./figures/boxplot_hom.jpg>]
+<figures/mapa_hom_2019.jpg, id=222, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_hom_2019.jpg Graphic file (type jpg)
+<use figures/mapa_hom_2019.jpg>
+Package pdftex.def Info: figures/mapa_hom_2019.jpg  used on input line 214.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.214 \end{frame}
+                 
+
+[9
+
+ <./figures/mapa_hom_2019.jpg>]
+<figures/histog_hom_nonzero.jpg, id=248, 3793.17125pt x 2723.17375pt>
+File: figures/histog_hom_nonzero.jpg Graphic file (type jpg)
+<use figures/histog_hom_nonzero.jpg>
+Package pdftex.def Info: figures/histog_hom_nonzero.jpg  used on input line 223
+.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.223 \end{frame}
+                 
+
+[10
+
+ <./figures/histog_hom_nonzero.jpg>]
+<figures/boxplot_hom_nonzero.jpg, id=274, 3793.17125pt x 2723.17375pt>
+File: figures/boxplot_hom_nonzero.jpg Graphic file (type jpg)
+<use figures/boxplot_hom_nonzero.jpg>
+Package pdftex.def Info: figures/boxplot_hom_nonzero.jpg  used on input line 23
+2.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.232 \end{frame}
+                 
+
+[11
+
+ <./figures/boxplot_hom_nonzero.jpg>]
+<figures/mapa_hom_2019_nonzero.jpg, id=300, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_hom_2019_nonzero.jpg Graphic file (type jpg)
+<use figures/mapa_hom_2019_nonzero.jpg>
+Package pdftex.def Info: figures/mapa_hom_2019_nonzero.jpg  used on input line 
+240.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.240 \end{frame}
+                 
+
+[12
+
+ <./figures/mapa_hom_2019_nonzero.jpg>]
+<figures/histog_outros.jpg, id=326, 3793.17125pt x 2723.17375pt>
+File: figures/histog_outros.jpg Graphic file (type jpg)
+<use figures/histog_outros.jpg>
+Package pdftex.def Info: figures/histog_outros.jpg  used on input line 249.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.249 \end{frame}
+                 
+
+[13
+
+ <./figures/histog_outros.jpg>]
+<figures/boxplot_outros.jpg, id=353, 3793.17125pt x 2723.17375pt>
+File: figures/boxplot_outros.jpg Graphic file (type jpg)
+<use figures/boxplot_outros.jpg>
+Package pdftex.def Info: figures/boxplot_outros.jpg  used on input line 258.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.258 \end{frame}
+                 
+
+[14
+
+ <./figures/boxplot_outros.jpg>]
+<figures/histog_outros_nonzero.jpg, id=379, 3793.17125pt x 2723.17375pt>
+File: figures/histog_outros_nonzero.jpg Graphic file (type jpg)
+<use figures/histog_outros_nonzero.jpg>
+Package pdftex.def Info: figures/histog_outros_nonzero.jpg  used on input line 
+267.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.267 \end{frame}
+                 
+
+[15
+
+ <./figures/histog_outros_nonzero.jpg>]
+<figures/boxplot_outros_nonzero.jpg, id=405, 3793.17125pt x 2723.17375pt>
+File: figures/boxplot_outros_nonzero.jpg Graphic file (type jpg)
+<use figures/boxplot_outros_nonzero.jpg>
+Package pdftex.def Info: figures/boxplot_outros_nonzero.jpg  used on input line
+ 275.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.275 \end{frame}
+                 
+
+[16
+
+ <./figures/boxplot_outros_nonzero.jpg>]
+<figures/mapa_feminicídios.jpg, id=431, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_feminicídios.jpg Graphic file (type jpg)
+<use figures/mapa_feminicídios.jpg>
+Package pdftex.def Info: figures/mapa_feminicídios.jpg  used on input line 283
+.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.283 \end{frame}
+                 
+
+[17
+
+ <./figures/mapa_feminicídios.jpg>]
+<figures/mapa_hom_dolosos.jpg, id=457, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_hom_dolosos.jpg Graphic file (type jpg)
+<use figures/mapa_hom_dolosos.jpg>
+Package pdftex.def Info: figures/mapa_hom_dolosos.jpg  used on input line 291.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.291 \end{frame}
+                 
+
+[18
+
+ <./figures/mapa_hom_dolosos.jpg>]
+<figures/mapa_lesao.jpg, id=483, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_lesao.jpg Graphic file (type jpg)
+<use figures/mapa_lesao.jpg>
+Package pdftex.def Info: figures/mapa_lesao.jpg  used on input line 299.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.299 \end{frame}
+                 
+
+[19
+
+ <./figures/mapa_lesao.jpg>]
+<figures/mapa_mandados.jpg, id=510, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_mandados.jpg Graphic file (type jpg)
+<use figures/mapa_mandados.jpg>
+Package pdftex.def Info: figures/mapa_mandados.jpg  used on input line 307.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.307 \end{frame}
+                 
+
+[20
+
+ <./figures/mapa_mandados.jpg>]
+<figures/mapa_transito.jpg, id=536, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_transito.jpg Graphic file (type jpg)
+<use figures/mapa_transito.jpg>
+Package pdftex.def Info: figures/mapa_transito.jpg  used on input line 315.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.315 \end{frame}
+                 
+
+[21
+
+ <./figures/mapa_transito.jpg>]
+<figures/mapa_esclarecer.jpg, id=562, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_esclarecer.jpg Graphic file (type jpg)
+<use figures/mapa_esclarecer.jpg>
+Package pdftex.def Info: figures/mapa_esclarecer.jpg  used on input line 323.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.323 \end{frame}
+                 
+
+[22
+
+ <./figures/mapa_esclarecer.jpg>]
+<figures/mapa_latrocinios.jpg, id=588, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_latrocinios.jpg Graphic file (type jpg)
+<use figures/mapa_latrocinios.jpg>
+Package pdftex.def Info: figures/mapa_latrocinios.jpg  used on input line 331.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.331 \end{frame}
+                 
+
+[23
+
+ <./figures/mapa_latrocinios.jpg>]
+<figures/mapa_tentativas.jpg, id=614, 3793.17125pt x 2723.17375pt>
+File: figures/mapa_tentativas.jpg Graphic file (type jpg)
+<use figures/mapa_tentativas.jpg>
+Package pdftex.def Info: figures/mapa_tentativas.jpg  used on input line 339.
+(pdftex.def)             Requested size: 307.28987pt x 220.6008pt.
+
+pdfTeX warning (ext4): destination with the same identifier (name{fig:histoghom
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.339 \end{frame}
+                 
+
+[24
+
+ <./figures/mapa_tentativas.jpg>]
+\openout2 = `tables/reg_hom_1.aux'.
+
+ (tables/reg_hom_1.tex
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+)
+
+[25
+
+
+
+
+]
+\openout2 = `tables/reg_hom_2.aux'.
+
+ (tables/reg_hom_2.tex
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+)
+
+[26
+
+
+
+
+]
+\openout2 = `tables/reg_hom_3.aux'.
+
+ (tables/reg_hom_3.tex
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+)
+Overfull \vbox (3.47513pt too high) detected at line 351
+ []
+
+
+
+[27
+
+
+
+
+]
+\openout2 = `tables/reg_hom_4.aux'.
+
+ (tables/reg_hom_4.tex
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+)
+Overfull \vbox (3.47513pt too high) detected at line 355
+ []
+
+
+
+[28
+
+
+
+
+]
+\openout2 = `tables/outros_crimes_1.aux'.
+
+ (tables/outros_crimes_1.tex
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+)
+
+[29
+
+
+
+
+]
+\openout2 = `tables/outros_crimes_2.aux'.
+
+ (tables/outros_crimes_2.tex
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+)
+
+[30
+
+
+
+
+]
+\openout2 = `tables/outros_crimes_3.aux'.
+
+ (tables/outros_crimes_3.tex
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+)
+
+[31
+
+
+
+
+]
+\openout2 = `tables/outros_crimes_4.aux'.
+
+ (tables/outros_crimes_4.tex
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+)
+Overfull \vbox (4.1575pt too high) detected at line 371
+ []
+
+
+
+[32
+
+
+
 
 ]
 \tf@nav=\write6
@@ -949,28 +1830,38 @@ Dictionary: translator-theorem-dictionary, Language: English
 \tf@snm=\write8
 \openout8 = `template_Beamer.snm'.
 
- (template_Beamer.aux)
+ (template_Beamer.aux (tables/reg_hom_1.aux) (tables/reg_hom_2.aux)
+(tables/reg_hom_3.aux) (tables/reg_hom_4.aux) (tables/outros_crimes_1.aux)
+(tables/outros_crimes_2.aux) (tables/outros_crimes_3.aux)
+(tables/outros_crimes_4.aux))
  ***********
 LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-05-27>
  ***********
+
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `template_Beamer.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 21281 strings out of 473903
- 412728 string characters out of 5726580
- 1932908 words of memory out of 5000000
- 43733 multiletter control sequences out of 15000+600000
- 559881 words of font info for 42 fonts, out of 8000000 for 9000
+ 30366 strings out of 473903
+ 663534 string characters out of 5726580
+ 2092908 words of memory out of 5000000
+ 52576 multiletter control sequences out of 15000+600000
+ 601343 words of font info for 105 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,14n,123p,410b,557s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,14n,123p,410b,1445s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
-cmss10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmss12.pfb>
-Output written on template_Beamer.pdf (2 pages, 32251 bytes).
+cmmi6.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
+onts/cm/cmss10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmss12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/cm/cmss8.pfb><C:/Users/victo/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmsy6.pfb>
+Output written on template_Beamer.pdf (32 pages, 20347742 bytes).
 PDF statistics:
- 76 PDF objects out of 1000 (max. 8388607)
- 5 named destinations out of 1000 (max. 500000)
- 43 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 890 PDF objects out of 1000 (max. 8388607)
+ 74 named destinations out of 1000 (max. 500000)
+ 133 words of extra memory for PDF output out of 10000 (max. 10000000)
 

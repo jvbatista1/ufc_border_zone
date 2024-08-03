@@ -1,18 +1,15 @@
 ---
 title: "Exploratória"
 author: "Victor Batista"
-format: beamer
-papersize: a2
+format: revealjs
 execute:
   echo: false
   warning: false
-header-includes:
-  - \usepackage{adjustbox}  
-
 ---
 
 ```{r, include=FALSE}
-dropbox <- "c:/Users/victor/dropbox/DISSERTACAO"
+dropbox <- "c:/Users/victo/dropbox/DISSERTACAO"
+output <- "c:/Users/victo/git/ufc_border_zone/latex/"
 
 library("sf")
 library("SpatialRDD")
@@ -156,18 +153,6 @@ df <- cbind(df, a)
 rm(a)
 ```
 
-## Mapa por grupos
-
-```{r}
-tm_shape(df) + tm_polygons(col = "groups")
-```
-
-## Mapa por arcos
-
-```{r}
-tm_shape(df) + tm_polygons(col = "arcos")
-```
-
 # Análise exploratória
 
 ```{r, include=FALSE}
@@ -221,34 +206,418 @@ df_rdd <- df_rdd |>
   )
 ```
 
+## Base com valor acima de zero
+```{r}
+
+df_rdd2 <- df_rdd |> 
+  filter(`valor-2010` != 0) |> 
+  filter(`valor-2011` != 0) |> 
+  filter(`valor-2012` != 0) |> 
+  filter(`valor-2013` != 0) |> 
+  filter(`valor-2014` != 0) |> 
+  filter(`valor-2015` != 0) |> 
+  filter(`valor-2016` != 0) |> 
+  filter(`valor-2017` != 0) |> 
+  filter(`valor-2018` != 0) |> 
+  filter(`valor-2019` != 0)
+```
+
+
 ## Estatísticas socioeconômicas
 ```{r}
 df_rdd |> 
-  select(Taxa_de_analfabetismo:Porcentagem_Homens_Jovens) 
+  select(Taxa_de_analfabetismo:Porcentagem_Homens_Jovens) |> 
+  datasummary_skim(output = file.path(output, "tables/stat_socioecon.tex"))
 ```
 
 ## Estatísticas homicídios
 ```{r}
 df_rdd |> 
   select(`valor-2010`:`valor-2019`) |> 
-  datasummary_skim()
+  datasummary_skim(output = file.path(output, "tables/stat_homicidios.tex"))
 ```
 
 ## Estatísticas outros crimes
 ```{r}
 df_rdd |> 
   select(feminicidio_pc:tentativa_hom_pc) |> 
-  datasummary_skim()
+  datasummary_skim(output = file.path(output, "tables/stat_outros.tex"))
 ```
 
-## Estatísticas categóricas {style="font-size: 0.5em"}
+## Estatísticas categóricas 
 ```{r}
-#| fontsize: 10pt
-
 df_rdd |> 
   select(name_state, name_region, groups, arcos) |> 
-  datasummary_skim()
+  datasummary_skim(output = file.path(output, "tables/stat_categ.tex"))
 ```
 
----
----
+# Homicídios
+
+## Gráficos
+
+### Histograma por ano
+```{r}
+# Criar histogramas para cada ano
+taxa_homicidios_long <- df_rdd %>% 
+  select(code_muni, groups, `valor-2010`:`valor-2019`) %>%
+  pivot_longer(cols = `valor-2010`:`valor-2019`, names_to = "year", values_to = "taxa_homicidio")
+
+taxa_homicidios_long_semzeros <- df_rdd %>% 
+  select(code_muni, groups, `valor-2010`:`valor-2019`) %>%
+  pivot_longer(cols = `valor-2010`:`valor-2019`, names_to = "year", values_to = "taxa_homicidio") |> 
+  filter(taxa_homicidio != 0)
+
+ggplot(taxa_homicidios_long, aes(x = taxa_homicidio, fill = groups)) +
+  geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "gray30") +
+  facet_wrap(~ year, scales = "free_x") +
+  scale_fill_viridis_d(option = "C") +
+  ggtitle("Distribuição das Taxas de Homicídio de 2010 a 2019") +
+  theme_minimal() +
+  labs(x = "Taxa de Homicídio", y = "Frequência", fill = "Grupo")
+  
+ggsave(file.path(output, "figures/histog_hom.jpg"), width = 16, units = "cm", dpi = 600)
+
+```
+
+### Boxplots
+```{r}
+# Criar boxplots para comparar grupos
+ggplot(taxa_homicidios_long, aes(x = year, y = taxa_homicidio, fill = groups)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_viridis_d(option = "C", name = "Grupo") +
+  ggtitle("Comparação das Taxas de Homicídio de 2010 a 2019 por Grupo") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa de Homicídio", fill = "Grupo")
+
+ggsave(file.path(output, "figures/boxplot_hom.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+### Mapas
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd) +
+  geom_sf(aes(fill = `valor-2019`, colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Taxa de Homicídio") +
+  ggtitle("Taxa de Homicídios por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_hom_2019.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+## Gráficos
+
+### Histograma por ano
+```{r}
+# Criar histogramas para cada ano
+taxa_homicidios_long2 <- df_rdd2 %>% 
+  select(code_muni, groups, `valor-2010`:`valor-2019`) %>%
+  pivot_longer(cols = `valor-2010`:`valor-2019`, names_to = "year", values_to = "taxa_homicidio")
+
+
+ggplot(taxa_homicidios_long2, aes(x = taxa_homicidio, fill = groups)) +
+  geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "gray30") +
+  facet_wrap(~ year, scales = "free_x") +
+  scale_fill_viridis_d(option = "C") +
+  ggtitle("Distribuição das Taxas de Homicídio de 2010 a 2019 (non-zero)") +
+  theme_minimal() +
+  labs(x = "Taxa de Homicídio", y = "Frequência", fill = "Grupo")
+
+ggsave(file.path(output, "figures/histog_hom_nonzero.jpg"), width = 16, units = "cm", dpi = 600)
+
+```
+
+### Boxplots
+```{r}
+# Criar boxplots para comparar grupos
+ggplot(taxa_homicidios_long2, aes(x = year, y = taxa_homicidio, fill = groups)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_viridis_d(option = "C", name = "Grupo") +
+  ggtitle("Comparação das Taxas de Homicídio de 2010 a 2019 por Grupo (non-zero)") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa de Homicídio", fill = "Grupo")
+
+ggsave(file.path(output, "figures/boxplot_hom_nonzero.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+### Mapas
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd) +
+  geom_sf(aes(fill = log(`valor-2019`), colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log da Taxa de Homicídio") +
+  ggtitle("Taxa de Homicídios por Município em 2019 (non-zero)") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_hom_2019_nonzero.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+## Regressões
+
+```{r}
+list("ln hom 2010" = lm(log(`valor-2010`) ~ treated, data = df_rdd |> filter(`valor-2010` != 0)),
+     "ln hom 2011" = lm(log(`valor-2011`) ~ treated, data = df_rdd |> filter(`valor-2011` != 0)),
+     "ln hom 2012" = lm(log(`valor-2012`) ~ treated, data = df_rdd |> filter(`valor-2012` != 0)),
+     "ln hom 2013" = lm(log(`valor-2013`) ~ treated, data = df_rdd |> filter(`valor-2013` != 0)),
+     "ln hom 2014" = lm(log(`valor-2014`) ~ treated, data = df_rdd |> filter(`valor-2014` != 0))) %>%
+  modelsummary(stars = T, output = file.path(output, "tables/reg_hom_1.tex"))
+```
+
+```{r}
+list("ln hom 2015" = lm(log(`valor-2015`) ~ treated, data = df_rdd |> filter(`valor-2015` != 0)),
+     "ln hom 2016" = lm(log(`valor-2016`) ~ treated, data = df_rdd |> filter(`valor-2016` != 0)),
+     "ln hom 2017" = lm(log(`valor-2017`) ~ treated, data = df_rdd |> filter(`valor-2017` != 0)),
+     "ln hom 2018" = lm(log(`valor-2018`) ~ treated, data = df_rdd |> filter(`valor-2018` != 0)),
+     "ln hom 2019" = lm(log(`valor-2019`) ~ treated, data = df_rdd |> filter(`valor-2019` != 0))) %>%
+  modelsummary(stars = T, output = file.path(output, "tables/reg_hom_2.tex"))
+```
+
+```{r}
+list("ln hom 2010" = lm(log(`valor-2010`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2010` != 0)),
+     "ln hom 2011" = lm(log(`valor-2011`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2011` != 0)),
+     "ln hom 2012" = lm(log(`valor-2012`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2012` != 0)),
+     "ln hom 2013" = lm(log(`valor-2013`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2013` != 0)),
+     "ln hom 2014" = lm(log(`valor-2014`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2014` != 0))) %>%
+  modelsummary(stars = T, output = file.path(output, "tables/reg_hom_3.tex"))
+```
+
+```{r}
+list("ln hom 2015" = lm(log(`valor-2015`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2015` != 0)),
+     "ln hom 2016" = lm(log(`valor-2016`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2016` != 0)),
+     "ln hom 2017" = lm(log(`valor-2017`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2017` != 0)),
+     "ln hom 2018" = lm(log(`valor-2018`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2018` != 0)),
+     "ln hom 2019" = lm(log(`valor-2019`) ~ treated+abbrev_state, data = df_rdd |> filter(`valor-2019` != 0))) %>%
+  modelsummary(stars = T, output = file.path(output, "tables/reg_hom_4.tex"))
+```
+
+# Outros crimes
+
+## Gráficos
+
+### Histograma
+
+```{r}
+# Criar histogramas para cada ano
+outros_crimes_long <- df_rdd %>% 
+  filter(name_muni != "Cruzmaltina" & name_muni != "Flórida") |> 
+  select(code_muni, groups, feminicidio_pc:tentativa_hom_pc) %>%
+  pivot_longer(cols = feminicidio_pc:tentativa_hom_pc, names_to = "crime", values_to = "taxa_100mil")
+
+ggplot(outros_crimes_long, aes(x = taxa_100mil, fill = groups)) +
+  geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "gray30") +
+  facet_wrap(~ crime, scales = "free_x") +
+  scale_fill_viridis_d(option = "C") +
+  ggtitle("Distribuição das taxas de outros crimes em 2019") +
+  theme_minimal() +
+  labs(x = "Taxa", y = "Frequência", fill = "Grupo")
+
+ggsave(file.path(output, "figures/histog_outros.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+### Boxplot
+
+```{r}
+ggplot(outros_crimes_long, aes(x = crime, y = taxa_100mil, fill = groups)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_viridis_d(option = "C", name = "Grupo") +
+  ggtitle("Comparação das taxas de outros crimes em 2019 por Grupo") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa", fill = "Grupo")
+
+ggsave(file.path(output, "figures/boxplot_outros.jpg"), width = 16, units = "cm", dpi = 600)
+```
+```{r}
+df_rdd |> 
+  mutate(feminicidio_pc = ifelse(feminicidio_pc == 0, NA, feminicidio_pc)) |> 
+  mutate(hom_doloso_pc = ifelse(hom_doloso_pc == 0, NA, hom_doloso_pc)) |> 
+  mutate(lesao_pc = ifelse(lesao_pc == 0, NA, lesao_pc)) |> 
+  mutate(mandado_pc = ifelse(mandado_pc == 0, NA, mandado_pc)) |> 
+  mutate(transito_pc = ifelse(transito_pc == 0, NA, transito_pc)) |> 
+  mutate(esclarecer_pc = ifelse(esclarecer_pc == 0, NA, esclarecer_pc)) |> 
+  mutate(latrocinio_pc = ifelse(latrocinio_pc == 0, NA, latrocinio_pc)) |> 
+  mutate(tentativa_hom_pc = ifelse(tentativa_hom_pc == 0, NA, tentativa_hom_pc)) |> 
+  filter(name_muni != "Cruzmaltina" & name_muni != "Flórida") |> 
+  select(code_muni, groups, feminicidio_pc:tentativa_hom_pc) %>%
+  pivot_longer(cols = feminicidio_pc:tentativa_hom_pc, names_to = "crime", values_to = "taxa_100mil") |> 
+  ggplot(aes(x = taxa_100mil, fill = groups)) +
+  geom_histogram(position = 'identity', bins = 30, alpha = 0.5, color = "gray30") +
+  facet_wrap(~ crime, scales = "free_x") +
+  scale_fill_viridis_d(option = "C") +
+  ggtitle("Distribuição das taxas de outros crimes em 2019") +
+  theme_minimal() +
+  labs(x = "Taxa", y = "Frequência", fill = "Grupo")
+
+ggsave(file.path(output, "figures/histog_outros_nonzero.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+
+```{r}
+df_rdd %>% 
+  mutate(feminicidio_pc = ifelse(feminicidio_pc == 0, NA, feminicidio_pc)) |> 
+  mutate(hom_doloso_pc = ifelse(hom_doloso_pc == 0, NA, hom_doloso_pc)) |> 
+  mutate(lesao_pc = ifelse(lesao_pc == 0, NA, lesao_pc)) |> 
+  mutate(mandado_pc = ifelse(mandado_pc == 0, NA, mandado_pc)) |> 
+  mutate(transito_pc = ifelse(transito_pc == 0, NA, transito_pc)) |> 
+  mutate(esclarecer_pc = ifelse(esclarecer_pc == 0, NA, esclarecer_pc)) |> 
+  mutate(latrocinio_pc = ifelse(latrocinio_pc == 0, NA, latrocinio_pc)) |> 
+  mutate(tentativa_hom_pc = ifelse(tentativa_hom_pc == 0, NA, tentativa_hom_pc)) |> 
+  filter(name_muni != "Cruzmaltina" & name_muni != "Flórida") |> 
+  select(code_muni, groups, feminicidio_pc:tentativa_hom_pc) %>%
+  pivot_longer(cols = feminicidio_pc:tentativa_hom_pc, names_to = "crime", values_to = "taxa_100mil") |>
+  ggplot(aes(x = crime, y = taxa_100mil, fill = groups)) +
+  geom_boxplot(alpha = 0.5) +
+  scale_fill_viridis_d(option = "C", name = "Grupo") +
+  ggtitle("Comparação das taxas de outros crimes em 2019 por Grupo") +
+  theme_minimal() +
+  labs(x = "Ano", y = "Taxa", fill = "Grupo")
+
+ggsave(file.path(output, "figures/boxplot_outros_nonzero.jpg"), width = 16, units = "cm", dpi = 600)
+
+```
+
+### Mapas
+
+```{r}
+
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = log(`feminicidio_pc`),colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log Qtde por 100 mil hab") +
+  ggtitle("Número de Feminicídios por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_feminicídios.jpg"), width = 16, units = "cm", dpi = 600)
+
+```
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = log(`hom_doloso_pc`),colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log Qtde por 100 mil hab") +
+  ggtitle("Número de Homicídios dolosos por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_hom_dolosos.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = log(`lesao_pc`),colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log Qtde por 100 mil hab") +
+  ggtitle("Número de Lesão Corporal seguida de morte por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_lesao.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = log(`mandado_pc`),colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log Qtde por 100 mil hab") +
+  ggtitle("Número de cumprimentos de Mandados de Prisão por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_mandados.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = log(`transito_pc`),colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log Qtde por 100 mil hab") +
+  ggtitle("Número de mortes do trânsito por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_transito.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = log(`esclarecer_pc`),colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log Qtde por 100 mil hab") +
+  ggtitle("Número de mortes a esclarecer por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_esclarecer.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = log(`latrocinio_pc`),colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log Qtde por 100 mil hab") +
+  ggtitle("Número de Latrocínios por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_latrocinios.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+```{r}
+# Criar um mapa para um ano específico, por exemplo, 2019
+ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
+  geom_sf(aes(fill = log(`tentativa_hom_pc`),colour = groups)) +
+  scale_colour_viridis_d(option = "C", na.value = "grey90", alpha = 0.3, name = "Grupo") +
+  scale_fill_viridis_c(option = "plasma", na.value = "grey90", name = "Log Qtde por 100 mil hab") +
+  ggtitle("Número de tentativas de homicídio por Município em 2019") +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+ggsave(file.path(output, "figures/mapa_tentativas.jpg"), width = 16, units = "cm", dpi = 600)
+```
+
+## Regressões
+
+```{r}
+list("ln feminicidio" = lm(log(feminicidio_pc) ~ treated, data = df_rdd |> filter(feminicidio_pc != 0)),
+     "ln hom doloso" = lm(log(hom_doloso_pc) ~ treated, data = df_rdd |> filter(hom_doloso_pc != 0)),
+     "ln lesao" = lm(log(lesao_pc) ~ treated, data = df_rdd |> filter(lesao_pc != 0)),
+     "ln mandado" = lm(log(mandado_pc) ~ treated, data = df_rdd |> filter(mandado_pc != 0))) %>%
+  modelsummary(stars = T, output = file.path(output, "tables/outros_crimes_1.tex"))
+```
+
+```{r}
+list("ln transito" = lm(log(transito_pc) ~ treated, data = df_rdd |> filter(transito_pc != 0)),
+     "ln esclarecer" = lm(log(esclarecer_pc) ~ treated, data = df_rdd |> filter(esclarecer_pc != 0)),
+     "ln latrocinio" = lm(log(latrocinio_pc) ~ treated, data = df_rdd |> filter(latrocinio_pc != 0)),
+     "ln tentativa" = lm(log(tentativa_hom_pc) ~ treated, data = df_rdd |> filter(tentativa_hom_pc != 0))) %>%
+  modelsummary(stars = T, output = file.path(output, "tables/outros_crimes_2.tex"))
+```
+
+```{r}
+list("ln feminicidio" = lm(log(feminicidio_pc) ~ treated+abbrev_state, data = df_rdd |> filter(feminicidio_pc != 0)),
+     "ln hom doloso" = lm(log(hom_doloso_pc) ~ treated+abbrev_state, data = df_rdd |> filter(hom_doloso_pc != 0)),
+     "ln lesao" = lm(log(lesao_pc) ~ treated+abbrev_state, data = df_rdd |> filter(lesao_pc != 0)),
+     "ln mandado" = lm(log(mandado_pc) ~ treated+abbrev_state, data = df_rdd |> filter(mandado_pc != 0))) %>%
+  modelsummary(stars = T, output = file.path(output, "tables/outros_crimes_3.tex"))
+```
+
+```{r}
+list("ln transito" = lm(log(transito_pc) ~ treated+abbrev_state, data = df_rdd |> filter(transito_pc != 0)),
+     "ln esclarecer" = lm(log(esclarecer_pc) ~ treated+abbrev_state, data = df_rdd |> filter(esclarecer_pc != 0)),
+     "ln latrocinio" = lm(log(latrocinio_pc) ~ treated+abbrev_state, data = df_rdd |> filter(latrocinio_pc != 0)),
+     "ln tentativa" = lm(log(tentativa_hom_pc) ~ treated+abbrev_state, data = df_rdd |> filter(tentativa_hom_pc != 0))) %>%
+  modelsummary(stars = T, output = file.path(output, "tables/outros_crimes_4.tex"))
+```

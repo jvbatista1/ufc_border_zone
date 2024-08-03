@@ -1,0 +1,33 @@
+\begin{table}
+	\tiny
+\centering
+\begin{talltblr}[         %% tabularray outer open
+entry=none,label=none,
+note{}={+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]},
+column{1}={halign=l,},
+column{2}={halign=c,},
+column{3}={halign=c,},
+column{4}={halign=c,},
+column{5}={halign=c,},
+hline{6}={1,2,3,4,5}{solid, 0.05em, black},
+}                     %% tabularray inner close
+\toprule
+& ln transito & ln esclarecer & ln latrocinio & ln tentativa \\ \midrule %% TinyTableHeader
+(Intercept) & \num{3.091}*** & \num{3.120}*** & \num{1.816}*** & \num{3.339}*** \\
+& (\num{0.061})  & (\num{0.078})  & (\num{0.141})  & (\num{0.058})  \\
+treatedTRUE & \num{-0.234}** & \num{-0.249}*  & \num{-0.046}   & \num{-0.012}   \\
+& (\num{0.086})  & (\num{0.110})  & (\num{0.213})  & (\num{0.080})  \\
+Num.Obs.    & \num{587}      & \num{532}      & \num{136}      & \num{571}      \\
+R2          & \num{0.013}    & \num{0.010}    & \num{0.000}    & \num{0.000}    \\
+R2 Adj.     & \num{0.011}    & \num{0.008}    & \num{-0.007}   & \num{-0.002}   \\
+AIC         & \num{5208.2}   & \num{4948.2}   & \num{934.9}    & \num{5374.2}   \\
+BIC         & \num{5221.3}   & \num{4961.0}   & \num{943.6}    & \num{5387.2}   \\
+Log.Lik.    & \num{-855.702} & \num{-878.376} & \num{-220.270} & \num{-781.120} \\
+F           & \num{7.437}    & \num{5.153}    & \num{0.047}    & \num{0.023}    \\
+RMSE        & \num{1.04}     & \num{1.26}     & \num{1.22}     & \num{0.95}     \\
+\bottomrule
+\end{talltblr}
+\end{table}

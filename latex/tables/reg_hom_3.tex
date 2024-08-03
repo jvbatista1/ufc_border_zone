@@ -1,0 +1,58 @@
+\begin{table}
+	\tiny
+	\centering
+	\begin{adjustbox}{width=0.5\textwidth,center}
+\begin{talltblr}[         %% tabularray outer open
+entry=none,label=none,
+note{}={+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
+column{1}={halign=l,},
+column{2}={halign=c,},
+column{3}={halign=c,},
+column{4}={halign=c,},
+column{5}={halign=c,},
+column{6}={halign=c,},
+hline{28}={1,2,3,4,5,6}{solid, 0.05em, black},
+}                     %% tabularray inner close
+\toprule
+& ln hom 2010 & ln hom 2011 & ln hom 2012 & ln hom 2013 & ln hom 2014 \\ \midrule %% TinyTableHeader
+(Intercept)      & \num{2.685}*** & \num{3.009}*** & \num{2.839}*** & \num{3.085}*** & \num{2.808}*** \\
+& (\num{0.178})  & (\num{0.164})  & (\num{0.162})  & (\num{0.158})  & (\num{0.160})  \\
+treatedTRUE      & \num{0.067}    & \num{-0.020}   & \num{0.133}*   & \num{0.033}    & \num{0.062}    \\
+& (\num{0.053})  & (\num{0.053})  & (\num{0.054})  & (\num{0.052})  & (\num{0.052})  \\
+abbrev\_stateAM & \num{-0.213}   & \num{-0.457}*  & \num{-0.298}   & \num{-0.393}+  & \num{-0.286}   \\
+& (\num{0.224})  & (\num{0.205})  & (\num{0.208})  & (\num{0.203})  & (\num{0.204})  \\
+abbrev\_stateAP & \num{0.548}*   & \num{0.131}    & \num{0.406}+   & \num{0.167}    & \num{0.575}*   \\
+& (\num{0.260})  & (\num{0.236})  & (\num{0.239})  & (\num{0.245})  & (\num{0.242})  \\
+abbrev\_stateMS & \num{0.368}+   & \num{0.171}    & \num{0.324}+   & \num{-0.016}   & \num{0.247}    \\
+& (\num{0.192})  & (\num{0.181})  & (\num{0.178})  & (\num{0.173})  & (\num{0.176})  \\
+abbrev\_stateMT & \num{0.563}**  & \num{0.244}    & \num{0.369}*   & \num{0.268}    & \num{0.650}*** \\
+& (\num{0.198})  & (\num{0.186})  & (\num{0.186})  & (\num{0.182})  & (\num{0.182})  \\
+abbrev\_statePA & \num{-0.492}   & \num{-0.621}+  & \num{0.205}    & \num{-0.525}   & \num{-0.303}   \\
+& (\num{0.347})  & (\num{0.364})  & (\num{0.374})  & (\num{0.333})  & (\num{0.315})  \\
+abbrev\_statePR & \num{0.442}*   & \num{0.184}    & \num{0.320}*   & \num{-0.016}   & \num{0.238}    \\
+& (\num{0.178})  & (\num{0.165})  & (\num{0.162})  & (\num{0.158})  & (\num{0.160})  \\
+abbrev\_stateRO & \num{0.554}**  & \num{0.050}    & \num{0.201}    & \num{-0.039}   & \num{0.524}**  \\
+& (\num{0.200})  & (\num{0.187})  & (\num{0.186})  & (\num{0.180})  & (\num{0.183})  \\
+abbrev\_stateRR & \num{0.336}    & \num{-0.025}   & \num{0.312}    & \num{0.270}    & \num{0.575}*   \\
+& (\num{0.248})  & (\num{0.235})  & (\num{0.243})  & (\num{0.232})  & (\num{0.241})  \\
+abbrev\_stateRS & \num{0.103}    & \num{-0.241}   & \num{-0.099}   & \num{-0.147}   & \num{0.083}    \\
+& (\num{0.178})  & (\num{0.166})  & (\num{0.163})  & (\num{0.159})  & (\num{0.161})  \\
+abbrev\_stateSC & \num{-0.075}   & \num{-0.454}*  & \num{-0.214}   & \num{-0.490}** & \num{-0.112}   \\
+& (\num{0.187})  & (\num{0.177})  & (\num{0.176})  & (\num{0.170})  & (\num{0.171})  \\
+abbrev\_stateSP & \num{-0.034}   & \num{-0.579}   & \num{-0.023}   & \num{-0.609}   & \num{-0.326}   \\
+& (\num{0.351})  & (\num{0.368})  & (\num{0.345})  & (\num{0.416})  & (\num{0.374})  \\
+Num.Obs.         & \num{705}      & \num{662}      & \num{694}      & \num{705}      & \num{717}      \\
+R2               & \num{0.112}    & \num{0.129}    & \num{0.110}    & \num{0.078}    & \num{0.108}    \\
+R2 Adj.          & \num{0.097}    & \num{0.113}    & \num{0.094}    & \num{0.062}    & \num{0.093}    \\
+AIC              & \num{1466.7}   & \num{1340.4}   & \num{1454.2}   & \num{1442.4}   & \num{1487.1}   \\
+BIC              & \num{1530.6}   & \num{1403.4}   & \num{1517.8}   & \num{1506.2}   & \num{1551.1}   \\
+Log.Lik.         & \num{-719.373} & \num{-656.222} & \num{-713.108} & \num{-707.187} & \num{-729.532} \\
+F                & \num{7.278}    & \num{8.044}    & \num{6.996}    & \num{4.909}    & \num{7.091}    \\
+RMSE             & \num{0.67}     & \num{0.65}     & \num{0.68}     & \num{0.66}     & \num{0.67}     \\
+\bottomrule
+\end{talltblr}
+\end{adjustbox}
+\end{table}

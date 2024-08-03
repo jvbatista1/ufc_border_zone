@@ -1,12 +1,373 @@
 \documentclass{beamer}
 \usetheme{default}
 
-\title{An}
-\author{TeXstudio Team}
+
+\usepackage{adjustbox}
+
+\usepackage{tabularray}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{codehigh}
+\usepackage[normalem]{ulem}
+\usepackage{anyfontsize}
+\UseTblrLibrary{booktabs}
+\UseTblrLibrary{siunitx}
+\newcommand{\tinytableTabularrayUnderline}[1]{\underline{#1}}
+\newcommand{\tinytableTabularrayStrikeout}[1]{\sout{#1}}
+\NewTableCommand{\tinytableDefineColor}[3]{\definecolor{#1}{#2}{#3}}
+
+\title{Análise exploratória}
+\author{Victor Batista}
 \begin{document}
+
 \begin{frame}[plain]
     \maketitle
 \end{frame}
-\begin{frame}{Frame Title}
+
+\begin{frame}{Socioeconômicas}
+	\begin{table}
+		\tiny
+		\centering
+		\begin{tblr}[         %% tabularray outer open
+			]                     %% tabularray outer close
+			{                     %% tabularray inner open
+				colspec={Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]},
+				column{1}={halign=l,},
+				column{2}={halign=l,},
+				column{3}={halign=l,},
+				column{4}={halign=l,},
+				column{5}={halign=l,},
+				column{6}={halign=l,},
+				column{7}={halign=l,},
+				column{8}={halign=l,},
+				column{9}={halign=l,},
+			}                     %% tabularray inner close
+			\toprule
+			& Unique & Missing Pct. & Mean & SD & Min & Median & Max & Histogram \\ \midrule %% TinyTableHeader
+			Taxa\_de\_analfabetismo          & 220  & 0 & 9.9     & 5.7     & 0.9    & 9.1     & 40.2     &  \\
+			Taxa\_de\_desemprego\_16a\_e+      & 643  & 0 & 4.1     & 2.7     & 0.1    & 3.8     & 27.8     &  \\
+			Gini                           & 898  & 0 & 0.5     & 0.1     & 0.3    & 0.5     & 0.8      &  \\
+			PIB\_per\_capita                 & 1130 & 0 & 16374.5 & 12533.7 & 3129.3 & 13963.5 & 220358.3 &  \\
+			população\_com\_renda\_<\_1/4\_SM & 934  & 0 & 13.9    & 13.0    & 0.1    & 9.9     & 77.9     &  \\
+			Taxa\_de\_trabalho\_infantil      & 932  & 0 & 17.2    & 10.8    & 0.3    & 14.5    & 72.1     &  \\
+			Porcentagem\_Homens\_Jovens      & 498  & 0 & 12.5    & 1.5     & 7.9    & 12.4    & 26.7     &  \\
+			\bottomrule
+		\end{tblr}
+	\end{table}	
 \end{frame}
+
+\begin{frame}{Homicídios}
+	\begin{table}
+		\tiny
+		\centering
+		\begin{tblr}[         %% tabularray outer open
+			]                     %% tabularray outer close
+			{                     %% tabularray inner open
+				colspec={Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]},
+				column{1}={halign=l,},
+				column{2}={halign=l,},
+				column{3}={halign=l,},
+				column{4}={halign=l,},
+				column{5}={halign=l,},
+				column{6}={halign=l,},
+				column{7}={halign=l,},
+				column{8}={halign=l,},
+				column{9}={halign=l,},
+			}                     %% tabularray inner close
+			\toprule
+			& Unique & Missing Pct. & Mean & SD & Min & Median & Max & Histogram \\ \midrule %% TinyTableHeader
+			valor-2010 & 658 & 0 & 15.5 & 18.7 & 0.0 & 10.2 & 147.4 &  \\
+			valor-2011 & 620 & 0 & 14.1 & 17.3 & 0.0 & 9.1  & 111.1 &  \\
+			valor-2012 & 648 & 0 & 16.1 & 19.3 & 0.0 & 10.9 & 132.0 &  \\
+			valor-2013 & 662 & 0 & 15.9 & 19.8 & 0.0 & 11.7 & 183.7 &  \\
+			valor-2014 & 680 & 0 & 16.4 & 19.0 & 0.0 & 11.8 & 153.9 &  \\
+			valor-2015 & 671 & 0 & 16.5 & 19.1 & 0.0 & 11.8 & 137.1 &  \\
+			valor-2016 & 690 & 0 & 18.2 & 20.7 & 0.0 & 13.2 & 155.1 &  \\
+			valor-2017 & 706 & 0 & 19.6 & 22.2 & 0.0 & 14.6 & 222.0 &  \\
+			valor-2018 & 678 & 0 & 16.9 & 20.3 & 0.0 & 12.4 & 211.0 &  \\
+			valor-2019 & 657 & 0 & 15.5 & 19.2 & 0.0 & 10.9 & 176.7 &  \\
+			\bottomrule
+		\end{tblr}
+	\end{table}
+	
+\end{frame}
+
+\begin{frame}{Outros crimes}
+	\begin{table}
+		\tiny
+		\centering
+		\begin{tblr}[         %% tabularray outer open
+			]                     %% tabularray outer close
+			{                     %% tabularray inner open
+				colspec={Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]Q[]},
+				column{1}={halign=l,},
+				column{2}={halign=l,},
+				column{3}={halign=l,},
+				column{4}={halign=l,},
+				column{5}={halign=l,},
+				column{6}={halign=l,},
+				column{7}={halign=l,},
+				column{8}={halign=l,},
+				column{9}={halign=l,},
+			}                     %% tabularray inner close
+			\toprule
+			& Unique & Missing Pct. & Mean & SD & Min & Median & Max & Histogram \\ \midrule %% TinyTableHeader
+			feminicidio\_pc   & 156 & 0 & 1.4  & 6.5    & 0.0 & 0.0  & 101.7   &  \\
+			hom\_doloso\_pc    & 621 & 0 & 31.7 & 263.5  & 0.0 & 6.0  & 8203.4  &  \\
+			lesao\_pc         & 74  & 0 & 0.9  & 6.9    & 0.0 & 0.0  & 169.5   &  \\
+			mandado\_pc       & 625 & 0 & 98.5 & 173.8  & 0.0 & 21.1 & 1285.4  &  \\
+			transito\_pc      & 588 & 0 & 20.1 & 86.6   & 0.0 & 3.2  & 2474.6  &  \\
+			esclarecer\_pc    & 531 & 0 & 58.4 & 1096.0 & 0.0 & 0.0  & 36508.5 &  \\
+			latrocinio\_pc    & 138 & 0 & 1.7  & 11.4   & 0.0 & 0.0  & 305.1   &  \\
+			tentativa\_hom\_pc & 570 & 0 & 26.8 & 164.6  & 0.0 & 2.3  & 4678.0  &  \\
+			\bottomrule
+		\end{tblr}
+	\end{table}
+	
+\end{frame}
+
+\begin{frame}{Categóricas}
+	\begin{table}
+		\centering
+		\begin{tblr}[         %% tabularray outer open
+			]                     %% tabularray outer close
+			{                     %% tabularray inner open
+				colspec={Q[]Q[]Q[]Q[]},
+				column{1}={halign=l,},
+				column{2}={halign=l,},
+				column{3}={halign=r,},
+				column{4}={halign=r,},
+			}                     %% tabularray inner close
+			\toprule
+			&    & N & \%  \\ \midrule %% TinyTableHeader
+			name\_state  & Acre               & 22  & 1.9  \\
+			& Amapá              & 15  & 1.3  \\
+			& Amazônas           & 32  & 2.8  \\
+			& Mato Grosso        & 57  & 5.0  \\
+			& Mato Grosso do Sul & 66  & 5.8  \\
+			& Pará               & 7   & 0.6  \\
+			& Paraná             & 297 & 26.2 \\
+			& Rio Grande do Sul  & 413 & 36.5 \\
+			& Rondônia           & 52  & 4.6  \\
+			& Roraima            & 15  & 1.3  \\
+			& Santa Catarina     & 144 & 12.7 \\
+			& São Paulo          & 12  & 1.1  \\
+			\bottomrule
+		\end{tblr}
+	\end{table}
+\end{frame}
+
+\begin{frame}{Categóricas}
+	\begin{table}
+		\centering
+		\begin{tblr}[         %% tabularray outer open
+			]                     %% tabularray outer close
+			{                     %% tabularray inner open
+				colspec={Q[]Q[]Q[]Q[]},
+				column{1}={halign=l,},
+				column{2}={halign=l,},
+				column{3}={halign=r,},
+				column{4}={halign=r,},
+			}                     %% tabularray inner close
+			\toprule
+			&    & N &  \% \\ \midrule %% TinyTableHeader
+			name\_region & Centro Oeste       & 123 & 10.9 \\
+			& Norte              & 143 & 12.6 \\
+			& Sudeste            & 12  & 1.1  \\
+			& Sul                & 854 & 75.4 \\
+			groups      & control            & 544 & 48.1 \\
+			& treatment          & 588 & 51.9 \\
+			arcos       & Arco Central       & 175 & 15.5 \\
+			& Arco Norte         & 91  & 8.0  \\
+			& Arco Sudeste       & 12  & 1.1  \\
+			& Arco Sul           & 854 & 75.4 \\
+			\bottomrule
+		\end{tblr}
+	\end{table}
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{figures/histog_hom}
+	\label{fig:histoghom}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/boxplot_hom}
+		\label{fig:histoghom}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_hom_2019}
+		\label{fig:histoghom}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/histog_hom_nonzero}
+		\label{fig:histoghom}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/boxplot_hom_nonzero}
+		\label{fig:histoghom}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_hom_2019_nonzero}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/histog_outros}
+		\label{fig:histoghom}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/boxplot_outros}
+		\label{fig:histoghom}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/histog_outros_nonzero}
+		\label{fig:histoghom}
+	\end{figure}
+	
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/boxplot_outros_nonzero}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_feminicídios}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_hom_dolosos}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_lesao}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_mandados}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_transito}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_esclarecer}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_latrocinios}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\linewidth]{figures/mapa_tentativas}
+		\label{fig:histoghom}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Homicídios}
+	\include{tables/reg_hom_1}
+\end{frame}
+
+\begin{frame}{Homicídios}
+	\include{tables/reg_hom_2}
+\end{frame}
+
+\begin{frame}{Homicídios x estados}
+	\include{tables/reg_hom_3}
+\end{frame}
+
+\begin{frame}{Homicídios x estados}
+	\include{tables/reg_hom_4}
+\end{frame}
+
+\begin{frame}{Outros crimes}
+	\include{tables/outros_crimes_1}
+\end{frame}
+
+\begin{frame}{Outros crimes}
+	\include{tables/outros_crimes_2}
+\end{frame}
+
+\begin{frame}{Outros crimes x estados}
+	\include{tables/outros_crimes_3}
+\end{frame}
+
+\begin{frame}{Outros crimes x estados}
+	\include{tables/outros_crimes_4}
+\end{frame}
+
 \end{document}

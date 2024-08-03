@@ -476,8 +476,6 @@ ggplot(df_rdd |> filter(name_muni != "Cruzmaltina" & name_muni != "Flórida")) +
 ## Regressões: Homicídios X grupos
 
 ```{r}
-
-
 list("hom 2010" = lm(`valor-2010` ~ treated, data = df_rdd),
      "hom 2011" = lm(`valor-2011` ~ treated, data = df_rdd),
      "hom 2012" = lm(`valor-2012` ~ treated, data = df_rdd),

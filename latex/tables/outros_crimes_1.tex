@@ -1,0 +1,33 @@
+\begin{table}
+	\tiny
+\centering
+\begin{talltblr}[         %% tabularray outer open
+entry=none,label=none,
+note{}={+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]},
+column{1}={halign=l,},
+column{2}={halign=c,},
+column{3}={halign=c,},
+column{4}={halign=c,},
+column{5}={halign=c,},
+hline{6}={1,2,3,4,5}{solid, 0.05em, black},
+}                     %% tabularray inner close
+\toprule
+& ln feminicidio & ln hom doloso & ln lesao & ln mandado \\ \midrule %% TinyTableHeader
+(Intercept) & \num{1.797}*** & \num{3.173}*** & \num{1.736}*** & \num{4.636}*** \\
+& (\num{0.144})  & (\num{0.062})  & (\num{0.237})  & (\num{0.068})  \\
+treatedTRUE & \num{-0.398}*  & \num{-0.180}*  & \num{-0.026}   & \num{-0.052}   \\
+& (\num{0.194})  & (\num{0.085})  & (\num{0.355})  & (\num{0.091})  \\
+Num.Obs.    & \num{155}      & \num{623}      & \num{72}       & \num{626}      \\
+R2          & \num{0.027}    & \num{0.007}    & \num{0.000}    & \num{0.001}    \\
+R2 Adj.     & \num{0.020}    & \num{0.006}    & \num{-0.014}   & \num{-0.001}   \\
+AIC         & \num{990.6}    & \num{5682.8}   & \num{514.8}    & \num{7711.0}   \\
+BIC         & \num{999.7}    & \num{5696.1}   & \num{521.6}    & \num{7724.4}   \\
+Log.Lik.    & \num{-247.646} & \num{-920.847} & \num{-130.240} & \num{-967.972} \\
+F           & \num{4.201}    & \num{4.462}    & \num{0.005}    & \num{0.327}    \\
+RMSE        & \num{1.20}     & \num{1.06}     & \num{1.48}     & \num{1.14}     \\
+\bottomrule
+\end{talltblr}
+\end{table}

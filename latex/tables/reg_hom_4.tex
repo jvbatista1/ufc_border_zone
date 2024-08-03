@@ -1,0 +1,58 @@
+\begin{table}
+\tiny
+\centering
+\begin{adjustbox}{width=0.5\textwidth,center}
+\begin{talltblr}[         %% tabularray outer open
+entry=none,label=none,
+note{}={+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
+column{1}={halign=l,},
+column{2}={halign=c,},
+column{3}={halign=c,},
+column{4}={halign=c,},
+column{5}={halign=c,},
+column{6}={halign=c,},
+hline{28}={1,2,3,4,5,6}{solid, 0.05em, black},
+}                     %% tabularray inner close
+\toprule
+& ln hom 2015 & ln hom 2016 & ln hom 2017 & ln hom 2018 & ln hom 2019 \\ \midrule %% TinyTableHeader
+(Intercept)      & \num{2.949}*** & \num{3.334}***  & \num{3.568}***  & \num{3.444}***  & \num{3.228}***  \\
+& (\num{0.155})  & (\num{0.163})   & (\num{0.154})   & (\num{0.170})   & (\num{0.159})   \\
+treatedTRUE      & \num{0.002}    & \num{0.043}     & \num{0.089}+    & \num{0.019}     & \num{-0.007}    \\
+& (\num{0.052})  & (\num{0.053})   & (\num{0.051})   & (\num{0.052})   & (\num{0.053})   \\
+abbrev\_stateAM & \num{-0.386}+  & \num{-0.641}**  & \num{-0.719}*** & \num{-0.486}*   & \num{-0.160}    \\
+& (\num{0.198})  & (\num{0.206})   & (\num{0.196})   & (\num{0.210})   & (\num{0.199})   \\
+abbrev\_stateAP & \num{0.427}+   & \num{0.045}     & \num{-0.139}    & \num{-0.264}    & \num{0.090}     \\
+& (\num{0.233})  & (\num{0.247})   & (\num{0.237})   & (\num{0.241})   & (\num{0.235})   \\
+abbrev\_stateMS & \num{0.109}    & \num{-0.162}    & \num{-0.377}*   & \num{-0.399}*   & \num{-0.281}    \\
+& (\num{0.173})  & (\num{0.180})   & (\num{0.171})   & (\num{0.187})   & (\num{0.177})   \\
+abbrev\_stateMT & \num{0.462}*   & \num{0.066}     & \num{-0.164}    & \num{-0.115}    & \num{0.112}     \\
+& (\num{0.180})  & (\num{0.190})   & (\num{0.177})   & (\num{0.192})   & (\num{0.184})   \\
+abbrev\_statePA & \num{-0.104}   & \num{-0.769}*   & \num{-0.809}**  & \num{-1.226}*** & \num{-0.149}    \\
+& (\num{0.335})  & (\num{0.321})   & (\num{0.310})   & (\num{0.306})   & (\num{0.312})   \\
+abbrev\_statePR & \num{0.144}    & \num{-0.155}    & \num{-0.450}**  & \num{-0.432}*   & \num{-0.253}    \\
+& (\num{0.156})  & (\num{0.163})   & (\num{0.155})   & (\num{0.171})   & (\num{0.160})   \\
+abbrev\_stateRO & \num{0.315}+   & \num{0.011}     & \num{-0.305}+   & \num{-0.432}*   & \num{-0.163}    \\
+& (\num{0.180})  & (\num{0.186})   & (\num{0.177})   & (\num{0.194})   & (\num{0.183})   \\
+abbrev\_stateRR & \num{0.442}+   & \num{0.104}     & \num{-0.224}    & \num{0.430}+    & \num{0.328}     \\
+& (\num{0.232})  & (\num{0.240})   & (\num{0.231})   & (\num{0.240})   & (\num{0.234})   \\
+abbrev\_stateRS & \num{0.014}    & \num{-0.302}+   & \num{-0.440}**  & \num{-0.459}**  & \num{-0.240}    \\
+& (\num{0.157})  & (\num{0.164})   & (\num{0.155})   & (\num{0.171})   & (\num{0.160})   \\
+abbrev\_stateSC & \num{-0.126}   & \num{-0.745}*** & \num{-0.913}*** & \num{-0.910}*** & \num{-0.644}*** \\
+& (\num{0.168})  & (\num{0.175})   & (\num{0.165})   & (\num{0.181})   & (\num{0.171})   \\
+abbrev\_stateSP & \num{-0.569}   & \num{-0.882}*   & \num{-1.003}**  & \num{-1.060}**  & \num{-0.565}+   \\
+& (\num{0.370})  & (\num{0.381})   & (\num{0.336})   & (\num{0.383})   & (\num{0.317})   \\
+Num.Obs.         & \num{713}      & \num{728}       & \num{749}       & \num{737}       & \num{700}       \\
+R2               & \num{0.073}    & \num{0.108}     & \num{0.098}     & \num{0.113}     & \num{0.076}     \\
+R2 Adj.          & \num{0.057}    & \num{0.093}     & \num{0.083}     & \num{0.098}     & \num{0.060}     \\
+AIC              & \num{1469.6}   & \num{1537.7}    & \num{1536.5}    & \num{1552.0}    & \num{1442.9}    \\
+BIC              & \num{1533.5}   & \num{1602.0}    & \num{1601.1}    & \num{1616.4}    & \num{1506.6}    \\
+Log.Lik.         & \num{-720.776} & \num{-754.847}  & \num{-754.235}  & \num{-761.999}  & \num{-707.461}  \\
+F                & \num{4.600}    & \num{7.185}     & \num{6.676}     & \num{7.697}     & \num{4.737}     \\
+RMSE             & \num{0.66}     & \num{0.68}      & \num{0.66}      & \num{0.68}      & \num{0.66}      \\
+\bottomrule
+\end{talltblr}
+\end{adjustbox}
+\end{table}

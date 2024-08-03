@@ -1,0 +1,57 @@
+\begin{table}
+	\tiny
+\centering
+\begin{adjustbox}{width=0.4\textwidth,center}
+\begin{talltblr}[         %% tabularray outer open
+entry=none,label=none,
+note{}={+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]},
+column{1}={halign=l,},
+column{2}={halign=c,},
+column{3}={halign=c,},
+column{4}={halign=c,},
+column{5}={halign=c,},
+hline{28}={1,2,3,4,5}{solid, 0.05em, black},
+}                     %% tabularray inner close
+\toprule
+& ln feminicidio & ln hom doloso & ln lesao & ln mandado \\ \midrule %% TinyTableHeader
+(Intercept)      & \num{1.398}**  & \num{3.273}*** & \num{1.252}    & \num{4.797}***  \\
+& (\num{0.429})  & (\num{0.255})  & (\num{1.040})  & (\num{0.204})   \\
+treatedTRUE      & \num{-0.205}   & \num{-0.156}+  & \num{0.276}    & \num{0.079}     \\
+& (\num{0.192})  & (\num{0.085})  & (\num{0.359})  & (\num{0.073})   \\
+abbrev\_stateAP & \num{-0.960}   & \num{0.037}    & \num{0.355}    & \num{-0.553}    \\
+& (\num{0.760})  & (\num{0.366})  & (\num{1.226})  & (\num{0.337})   \\
+abbrev\_stateMS & \num{-0.393}   & \num{-0.252}   & \num{0.198}    & \num{0.173}     \\
+& (\num{0.472})  & (\num{0.282})  & (\num{1.134})  & (\num{0.221})   \\
+abbrev\_stateMT & \num{-0.215}   & \num{0.041}    & \num{0.036}    & \num{-0.223}    \\
+& (\num{0.502})  & (\num{0.294})  & (\num{1.209})  & (\num{0.250})   \\
+abbrev\_statePA & \num{-0.161}   & \num{-0.407}   &                 & \num{-1.184}**  \\
+& (\num{1.169})  & (\num{0.482})  &                 & (\num{0.404})   \\
+abbrev\_statePR & \num{1.057}*   & \num{0.287}    & \num{1.206}    & \num{1.090}***  \\
+& (\num{0.436})  & (\num{0.256})  & (\num{1.040})  & (\num{0.213})   \\
+abbrev\_stateRO & \num{-0.856}   & \num{-0.193}   & \num{0.009}    & \num{-0.481}*   \\
+& (\num{0.590})  & (\num{0.286})  & (\num{1.226})  & (\num{0.230})   \\
+abbrev\_stateRR & \num{-0.066}   & \num{-0.045}   & \num{-0.039}   & \num{-1.931}*** \\
+& (\num{0.736})  & (\num{0.364})  & (\num{1.381})  & (\num{0.362})   \\
+abbrev\_stateRS & \num{0.182}    & \num{-0.319}   & \num{-0.685}   & \num{-0.949}*** \\
+& (\num{0.421})  & (\num{0.256})  & (\num{1.050})  & (\num{0.204})   \\
+abbrev\_stateSC & \num{0.817}    & \num{-0.556}*  & \num{-0.263}   & \num{-0.158}    \\
+& (\num{0.513})  & (\num{0.283})  & (\num{1.381})  & (\num{0.208})   \\
+abbrev\_stateAM &                 & \num{-1.007}*  & \num{-0.179}   & \num{-1.182}*** \\
+&                 & (\num{0.393})  & (\num{1.393})  & (\num{0.251})   \\
+abbrev\_stateSP &                 & \num{-1.077}*  &                 & \num{0.678}*    \\
+&                 & (\num{0.489})  &                 & (\num{0.323})   \\
+Num.Obs.         & \num{155}      & \num{623}      & \num{72}       & \num{626}       \\
+R2               & \num{0.253}    & \num{0.100}    & \num{0.259}    & \num{0.425}     \\
+R2 Adj.          & \num{0.201}    & \num{0.082}    & \num{0.138}    & \num{0.413}     \\
+AIC              & \num{967.6}    & \num{5643.9}   & \num{511.1}    & \num{7387.5}    \\
+BIC              & \num{1004.1}   & \num{5705.9}   & \num{538.5}    & \num{7449.6}    \\
+Log.Lik.         & \num{-227.151} & \num{-890.379} & \num{-119.432} & \num{-795.195}  \\
+F                & \num{4.874}    & \num{5.626}    & \num{2.137}    & \num{37.681}    \\
+RMSE             & \num{1.05}     & \num{1.01}     & \num{1.27}     & \num{0.86}      \\
+\bottomrule
+\end{talltblr}
+\end{adjustbox}
+\end{table}
