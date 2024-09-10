@@ -1,0 +1,33 @@
+\begin{table}
+\centering
+\begin{talltblr}[         %% tabularray outer open
+entry=none,label=none,
+note{}={+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
+column{1}={halign=l,},
+column{2}={halign=c,},
+column{3}={halign=c,},
+column{4}={halign=c,},
+column{5}={halign=c,},
+column{6}={halign=c,},
+hline{6}={1,2,3,4,5,6}{solid, 0.05em, black},
+}                     %% tabularray inner close
+\toprule
+& logit hom 2010 & ln hom 2011 & ln hom 2012 & ln hom 2013 & ln hom 2014 \\ \midrule %% TinyTableHeader
+(Intercept) & \num{0.422}*** & \num{24.703}*** & \num{24.867}*** & \num{25.000}*** & \num{25.130}*** \\
+& (\num{0.088})  & (\num{0.923})   & (\num{1.031})   & (\num{1.075})   & (\num{0.976})   \\
+treatedTRUE & \num{0.158}    & \num{-1.213}    & \num{2.528}+    & \num{1.017}     & \num{1.547}     \\
+& (\num{0.123})  & (\num{1.278})   & (\num{1.409})   & (\num{1.474})   & (\num{1.348})   \\
+Num.Obs.    & \num{1131}     & \num{662}       & \num{694}       & \num{705}       & \num{717}       \\
+R2          &                 & \num{0.001}     & \num{0.005}     & \num{0.001}     & \num{0.002}     \\
+R2 Adj.     &                 & \num{0.000}     & \num{0.003}     & \num{-0.001}    & \num{0.000}     \\
+AIC         & \num{1500.7}   & \num{5588.8}    & \num{6024.0}    & \num{6195.0}    & \num{6186.0}    \\
+BIC         & \num{1510.8}   & \num{5602.3}    & \num{6037.6}    & \num{6208.6}    & \num{6199.8}    \\
+Log.Lik.    &                 & \num{-2791.405} & \num{-3009.009} & \num{-3094.483} & \num{-3090.014} \\
+F           & \num{1.654}    & \num{0.901}     & \num{3.220}     & \num{0.476}     & \num{1.317}     \\
+RMSE        & \num{0.48}     & \num{16.41}     & \num{18.48}     & \num{19.50}     & \num{18.01}     \\
+\bottomrule
+\end{talltblr}
+\end{table}

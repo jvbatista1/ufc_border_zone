@@ -621,3 +621,52 @@ list("ln transito" = lm(log(transito_pc) ~ treated+abbrev_state, data = df_rdd |
      "ln tentativa" = lm(log(tentativa_hom_pc) ~ treated+abbrev_state, data = df_rdd |> filter(tentativa_hom_pc != 0))) %>%
   modelsummary(stars = T, output = file.path(output, "tables/outros_crimes_4.tex"))
 ```
+
+# Modelo Logit/Probit
+
+```{r}
+df_rdd3 <- df_rdd |> 
+  mutate(`valor-2010` = ifelse(`valor-2010` > 0, TRUE, FALSE),
+         `valor-2011` = ifelse(`valor-2011` > 0, TRUE, FALSE),
+         `valor-2012` = ifelse(`valor-2012` > 0, TRUE, FALSE),
+         `valor-2013` = ifelse(`valor-2013` > 0, TRUE, FALSE),
+         `valor-2014` = ifelse(`valor-2014` > 0, TRUE, FALSE),
+         `valor-2015` = ifelse(`valor-2015` > 0, TRUE, FALSE),
+         `valor-2016` = ifelse(`valor-2016` > 0, TRUE, FALSE),
+         `valor-2017` = ifelse(`valor-2017` > 0, TRUE, FALSE),
+         `valor-2018` = ifelse(`valor-2018` > 0, TRUE, FALSE),
+         `valor-2019` = ifelse(`valor-2019` > 0, TRUE, FALSE),
+         feminicidio_pc = ifelse(feminicidio_pc > 0, TRUE, FALSE),
+         hom_doloso_pc = ifelse(hom_doloso_pc > 0, TRUE, FALSE),
+         lesao_pc = ifelse(lesao_pc > 0, TRUE, FALSE),
+         mandado_pc = ifelse(mandado_pc > 0, TRUE, FALSE),
+         transito_pc = ifelse(transito_pc > 0, TRUE, FALSE),
+         esclarecer_pc = ifelse(esclarecer_pc > 0, TRUE, FALSE),
+         tentativa_hom_pc = ifelse(tentativa_hom_pc > 0, TRUE, FALSE),
+         latrocinio_pc = ifelse(latrocinio_pc > 0, TRUE, FALSE),)
+
+```
+
+```{r}
+list("logit hom 2010" = glm(`valor-2010` ~ treated, data = df_rdd3, family = (binomial)),
+     "logit hom 2011" = glm(`valor-2011` ~ treated, data = df_rdd3, family = (binomial)),
+     "logit hom 2012" = glm(`valor-2012` ~ treated, data = df_rdd3, family = (binomial)),
+     "logit hom 2013" = glm(`valor-2013` ~ treated, data = df_rdd3, family = (binomial)),
+     "logit hom 2014" = glm(`valor-2014` ~ treated, data = df_rdd3, family = (binomial))) %>%
+  modelsummary(stars = T)
+```
+
+```{r}
+logitmfx(`valor-2019` ~ treated + abbrev_state, data = df_rdd3)
+logitmfx(feminicidio_pc ~ treated + abbrev_state, data = df_rdd3)
+logitmfx(hom_doloso_pc ~ treated + abbrev_state, data = df_rdd3)
+logitmfx(lesao_pc ~ treated + abbrev_state, data = df_rdd3)
+logitmfx(mandado_pc ~ treated + abbrev_state, data = df_rdd3)
+logitmfx(transito_pc ~ treated + abbrev_state, data = df_rdd3)
+logitmfx(esclarecer_pc ~ treated + abbrev_state, data = df_rdd3)
+logitmfx(tentativa_hom_pc ~ treated + abbrev_state, data = df_rdd3)
+logitmfx(latrocinio_pc ~ treated + abbrev_state, data = df_rdd3)
+
+```
+
+

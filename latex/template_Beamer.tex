@@ -3,6 +3,7 @@
 
 
 \usepackage{adjustbox}
+\usepackage{listings}
 
 \usepackage{tabularray}
 \usepackage{float}
@@ -368,6 +369,262 @@
 
 \begin{frame}{Outros crimes x estados}
 	\include{tables/outros_crimes_4}
+\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: homicídios em 2019}
+	\begin{tiny}
+		logitmfx(formula = `valor-2019` ~ treated + abbrev state, data = df rdd3)
+		
+		Marginal Effects: \\
+		dF/dx Std. Err.       z     P>|z|    \\
+		treatedTRUE    -0.053197  0.030011 -1.7725   0.07630 . \\ 
+		abbrev stateAM -0.172346  0.220765 -0.7807   0.43499    \\
+		abbrev stateAP  0.052374  0.273576  0.1914   0.84818    \\
+		abbrev stateMS -0.236153  0.194370 -1.2150   0.22438    \\
+		abbrev stateMT -0.312723  0.180691 -1.7307   0.08350 .  \\
+		abbrev statePA -0.139558  0.327589 -0.4260   0.67010    \\
+		abbrev statePR -0.411885  0.160189 -2.5712   0.01013 *  \\
+		abbrev stateRO -0.170666  0.207871 -0.8210   0.41164    \\
+		abbrev stateRR  0.073823  0.262651  0.2811   0.77866    \\
+		abbrev stateRS -0.539566  0.135978 -3.9680 7.246e-05 *** \\
+		abbrev stateSC -0.522341  0.119584 -4.3680 1.254e-05 ***\\
+		abbrev stateSP -0.517981  0.106387 -4.8689 1.122e-06 ***\\
+		---
+		Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\\
+		
+		dF/dx is for discrete change for the following variables:
+		
+		[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+		[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+		[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+	\end{tiny}
+\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: feminicídio}
+	\begin{tiny}
+logitmfx(formula = feminicidio_pc ~ treated + abbrev_state, data = df_rdd3)
+
+Marginal Effects:\\
+dF/dx   Std. Err.       z  P>|z|\\
+treatedTRUE     0.00077599  0.02016223  0.0385 0.9693\\
+abbrev_stateAM -0.12173647  1.29786668 -0.0938 0.9253\\
+abbrev_stateAP -0.04299474  0.88357972 -0.0487 0.9612\\
+abbrev_stateMS -0.03394544  0.68790326 -0.0493 0.9606\\
+abbrev_stateMT -0.03731372  0.75905669 -0.0492 0.9608\\
+abbrev_statePA -0.05479633  1.14153841 -0.0480 0.9617\\
+abbrev_statePR -0.07277392  1.45622032 -0.0500 0.9601\\
+abbrev_stateRO -0.06334246  1.31853476 -0.0480 0.9617\\
+abbrev_stateRR -0.04317265  0.88739169 -0.0487 0.9612\\
+abbrev_stateRS -0.08877745  1.73758430 -0.0511 0.9593\\
+abbrev_stateSC -0.08269575  1.70274814 -0.0486 0.9613\\
+abbrev_stateSP -0.09301673  1.67232474 -0.0556 0.9556\\
+
+dF/dx is for discrete change for the following variables:
+
+[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+\end{tiny}
+\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: homicídio doloso}
+	\begin{tiny}
+logitmfx(formula = hom_doloso_pc ~ treated + abbrev_state, data = df_rdd3)
+
+Marginal Effects:\\
+dF/dx Std. Err.       z     P>|z|    \\
+treatedTRUE    -0.015842  0.031921 -0.4963 0.6196926    \\
+abbrev_stateAM -0.446614  0.082314 -5.4257 5.772e-08 ***\\
+abbrev_stateAP  0.231801  0.190925  1.2141 0.2247110    \\
+abbrev_stateMS -0.095675  0.155587 -0.6149 0.5386033    \\
+abbrev_stateMT -0.147840  0.154205 -0.9587 0.3377004    \\
+abbrev_statePA  0.064543  0.282128  0.2288 0.8190471    \\
+abbrev_statePR -0.239790  0.134895 -1.7776 0.0754685 .  \\
+abbrev_stateRO  0.160652  0.147638  1.0882 0.2765272    \\
+abbrev_stateRR  0.236599  0.187406  1.2625 0.2067728    \\
+abbrev_stateRS -0.427372  0.115966 -3.6853 0.0002284 ***\\
+abbrev_stateSC -0.461700  0.089885 -5.1366 2.798e-07 ***\\
+abbrev_stateSP -0.354482  0.139175 -2.5470 0.0108648 *  \\
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+dF/dx is for discrete change for the following variables:\\
+
+[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+\end{tiny}
+\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: lesão}
+	\begin{tiny}
+logitmfx(formula = lesao_pc ~ treated + abbrev_state, data = df_rdd3)
+
+Marginal Effects:\\
+dF/dx  Std. Err.       z  P>|z|\\
+treatedTRUE    -0.0175434  0.1484350 -0.1182 0.9059\\
+abbrev_stateAM -0.0190945  0.1666577 -0.1146 0.9088\\
+abbrev_stateAP  0.0732503  0.5790519  0.1265 0.8993\\
+abbrev_stateMS -0.0058122  0.0585650 -0.0992 0.9209\\
+abbrev_stateMT -0.0172280  0.1501973 -0.1147 0.9087\\
+abbrev_statePA -0.0467362  0.3280809 -0.1425 0.8867\\
+abbrev_statePR -0.0064639  0.0625423 -0.1034 0.9177\\
+abbrev_stateRO -0.0138404  0.1217282 -0.1137 0.9095\\
+abbrev_stateRR  0.0215073  0.1887734  0.1139 0.9093\\
+abbrev_stateRS -0.0402723  0.3423881 -0.1176 0.9064\\
+abbrev_stateSC -0.0488055  0.4236650 -0.1152 0.9083\\
+abbrev_stateSP -0.0498048  0.2654572 -0.1876 0.8512\\
+
+dF/dx is for discrete change for the following variables:
+
+[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+\end{tiny}
+\\\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: mandado}
+	\begin{tiny}
+logitmfx(formula = mandado_pc ~ treated + abbrev_state, data = df_rdd3)
+
+Marginal Effects:\\
+dF/dx   Std. Err.       z     P>|z|    \\
+treatedTRUE     0.00060792  0.03202285  0.0190  0.984854    \\
+abbrev_stateAM -0.18921777  0.30718852 -0.6160  0.537917    \\
+abbrev_stateAP -0.49867070  0.47588907 -1.0479  0.294698    \\
+abbrev_stateMS  0.00019357  0.27215860  0.0007  0.999433    \\
+abbrev_stateMT -0.57540814  0.59238226 -0.9713  0.331376    \\
+abbrev_statePA -0.30305977  0.33479697 -0.9052  0.365357    \\
+abbrev_statePR -0.72135501  0.25247819 -2.8571  0.004275 ** \\
+abbrev_stateRO -0.05919034  0.29342153 -0.2017  0.840132    \\
+abbrev_stateRR -0.55801462  0.65224470 -0.8555  0.392258    \\
+abbrev_stateRS -0.68744174  0.16852938 -4.0791 4.522e-05 ***\\
+abbrev_stateSC -0.25222677  0.27304853 -0.9237  0.355620    \\
+abbrev_stateSP  0.39033307  0.01986744 19.6469 < 2.2e-16 ***\\
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+dF/dx is for discrete change for the following variables:
+
+[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+\end{tiny}
+\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: trânsito}
+	\begin{tiny}
+logitmfx(formula = transito_pc ~ treated + abbrev_state, data = df_rdd3)
+
+Marginal Effects:\\
+dF/dx Std. Err.        z     P>|z|    \\
+treatedTRUE    -0.060723  0.031214  -1.9454  0.051728 .  \\
+abbrev_stateAM -0.486768  0.041459 -11.7409 < 2.2e-16 ***\\
+abbrev_stateAP  0.073032  0.194894   0.3747  0.707864    \\
+abbrev_stateMS -0.018626  0.138528  -0.1345  0.893042    \\
+abbrev_stateMT -0.190279  0.124513  -1.5282  0.126466    \\
+abbrev_statePA -0.184155  0.201676  -0.9131  0.361177    \\
+abbrev_statePR -0.257837  0.112756  -2.2867  0.022215 *  \\
+abbrev_stateRO -0.112785  0.136654  -0.8253  0.409182    \\
+abbrev_stateRR -0.203175  0.153440  -1.3241  0.185457    \\
+abbrev_stateRS -0.270968  0.113488  -2.3876  0.016958 *  \\
+abbrev_stateSC -0.295676  0.102492  -2.8849  0.003916 ** \\
+abbrev_stateSP -0.279100  0.140643  -1.9845  0.047205 *  \\
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+dF/dx is for discrete change for the following variables:
+
+[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+\end{tiny}
+\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: esclarecer}
+	\begin{tiny}
+logitmfx(formula = esclarecer_pc ~ treated + abbrev_state, data = df_rdd3)
+
+Marginal Effects:\\
+dF/dx  Std. Err.       z  P>|z|\\
+treatedTRUE    -0.0030027  0.1026236 -0.0293 0.9767\\
+abbrev_stateAM -0.0829964  3.0804033 -0.0269 0.9785\\
+abbrev_stateAP -0.0224400  0.7838715 -0.0286 0.9772\\
+abbrev_stateMS  0.6714224  4.4398650  0.1512 0.8798\\
+abbrev_stateMT  0.0752940  2.3302253  0.0323 0.9742\\
+abbrev_statePA -0.1151767  4.2702776 -0.0270 0.9785\\
+abbrev_statePR  0.1450836  4.3467282  0.0334 0.9734\\
+abbrev_stateRO  0.1727144  4.6533661  0.0371 0.9704\\
+abbrev_stateRR  0.0383949  1.2429247  0.0309 0.9754\\
+abbrev_stateRS  0.0726645  2.3746845  0.0306 0.9756\\
+abbrev_stateSC -0.4967346  2.3177188 -0.2143 0.8303\\
+abbrev_stateSP  0.0903027  2.7199554  0.0332 0.9735\\
+
+dF/dx is for discrete change for the following variables:
+
+[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+\end{tiny}
+\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: tentativa de homicídio}
+	\begin{tiny}
+logitmfx(formula = tentativa_hom_pc ~ treated + abbrev_state, 
+data = df_rdd3)
+
+Marginal Effects:
+dF/dx Std. Err.       z  P>|z|    \\
+treatedTRUE    -0.028986  0.032950 -0.8797 0.3790    \\
+abbrev_stateAM -0.402695  0.267183 -1.5072 0.1318    \\
+abbrev_stateAP  0.167406  0.165564  1.0111 0.3120    \\
+abbrev_stateMS  0.461360  0.428749  1.0761 0.2819    \\
+abbrev_stateMT  0.240505  0.172972  1.3904 0.1644    \\
+abbrev_statePA  0.484959  0.017259 28.0991 <2e-16 ***\\
+abbrev_statePR -0.081702  0.113592 -0.7193 0.4720    \\
+abbrev_stateRO  0.373998  0.318249  1.1752 0.2399    \\
+abbrev_stateRR  0.286079  0.235415  1.2152 0.2243    \\
+abbrev_stateRS  0.057843  0.111407  0.5192 0.6036    \\
+abbrev_stateSC  0.134237  0.117806  1.1395 0.2545    \\
+abbrev_stateSP  0.061511  0.177217  0.3471 0.7285    \\
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+dF/dx is for discrete change for the following variables:
+
+[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+\end{tiny}
+\end{frame}
+
+\begin{frame}{Efeitos marginais no modelo Logit: latrocínio}
+	\begin{tiny}
+logitmfx(formula = latrocinio_pc ~ treated + abbrev_state, data = df_rdd3)
+
+Marginal Effects:\\
+dF/dx Std. Err.       z     P>|z|    \\
+treatedTRUE    -0.050512  0.018590 -2.7172 0.0065842 ** \\
+abbrev_stateAM -0.096262  0.013513 -7.1236 1.051e-12 ***\\
+abbrev_stateAP -0.031168  0.046803 -0.6659 0.5054524    \\
+abbrev_stateMS -0.081882  0.018513 -4.4229 9.739e-06 ***\\
+abbrev_stateMT -0.057584  0.026419 -2.1796 0.0292844 *  \\
+abbrev_statePA -0.074654  0.031607 -2.3620 0.0181790 *  \\
+abbrev_statePR -0.098205  0.029335 -3.3478 0.0008147 ***\\
+abbrev_stateRO -0.083289  0.017627 -4.7251 2.300e-06 ***\\
+abbrev_stateRR -0.034331  0.046080 -0.7450 0.4562502    \\
+abbrev_stateRS -0.180235  0.037248 -4.8387 1.307e-06 ***\\
+abbrev_stateSC -0.133052  0.015339 -8.6742 < 2.2e-16 ***\\
+abbrev_stateSP -0.092524  0.015018 -6.1610 7.228e-10 ***\\
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+dF/dx is for discrete change for the following variables:
+
+[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+\end{tiny}
 \end{frame}
 
 \end{document}

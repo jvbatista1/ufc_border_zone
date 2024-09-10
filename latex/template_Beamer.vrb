@@ -1,0 +1,26 @@
+\begin{tiny}
+		logitmfx(formula = `valor-2019` ~ treated + abbrev_state, data = df_rdd3)
+		
+		Marginal Effects: \\
+		dF/dx Std. Err.       z     P>|z|    \\
+		treatedTRUE    -0.053197  0.030011 -1.7725   0.07630 . \\
+		abbrev_stateAM -0.172346  0.220765 -0.7807   0.43499    \\
+		abbrev_stateAP  0.052374  0.273576  0.1914   0.84818    \\
+		abbrev_stateMS -0.236153  0.194370 -1.2150   0.22438    \\
+		abbrev_stateMT -0.312723  0.180691 -1.7307   0.08350 .  \\
+		abbrev_statePA -0.139558  0.327589 -0.4260   0.67010    \\
+		abbrev_statePR -0.411885  0.160189 -2.5712   0.01013 *  \\
+		abbrev_stateRO -0.170666  0.207871 -0.8210   0.41164    \\
+		abbrev_stateRR  0.073823  0.262651  0.2811   0.77866    \\
+		abbrev_stateRS -0.539566  0.135978 -3.9680 7.246e-05 *** \\
+		abbrev_stateSC -0.522341  0.119584 -4.3680 1.254e-05 ***\\
+		abbrev_stateSP -0.517981  0.106387 -4.8689 1.122e-06 ***\\
+		---
+		Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\\
+		
+		dF/dx is for discrete change for the following variables:
+		
+		[1] "treatedTRUE"    "abbrev_stateAM" "abbrev_stateAP" "abbrev_stateMS"\\
+		[5] "abbrev_stateMT" "abbrev_statePA" "abbrev_statePR" "abbrev_stateRO"\\
+		[9] "abbrev_stateRR" "abbrev_stateRS" "abbrev_stateSC" "abbrev_stateSP"\\
+	\end{tiny}
