@@ -4,6 +4,7 @@ library(tidyverse)
 library(readxl)
 
 # Base do Sistema de Informações sobre Mortalidade (SIM)####
+library(basedosdados)
 query <- bdplyr("basedosdados.br_ms_sim.municipio_causa")
 sim <- bd_collect(query)
 
