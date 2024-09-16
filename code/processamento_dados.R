@@ -1,7 +1,141 @@
 dropbox <- "c:/Users/victor/dropbox/DISSERTACAO"
 
-library(tidyverse)
-library(readxl)
+library(sf)
+fronteira <- st_read(file.path(dropbox,"Fronteira/Faixa_de_Fronteira_por_UF_2022.shp")) %>%
+  st_transform("WGS84")
+
+library(dplyr)
+#Uniformiza a faixa de fronteira como uma única região
+linha_fronteira <- fronteira %>%
+  mutate(pais = "BR") %>% 
+  group_by(pais) %>% 
+  summarise()
+
+library(geobr)
+#Carrega sf dos municípios brasileiros
+municipios <- read_municipality(year=2020, showProgress = T) %>%
+  st_transform("WGS84")
+
+#Carrega o sf dos países da América do Sul
+america <- st_read(file.path(dropbox,"America/South_America.shp")) %>% 
+  st_transform("WGS84")
+
+#Carrega o sf dos municípios da faixa de fronteira
+municipios_fronteira <- st_read(file.path(dropbox,"Municipios_Fronteira/Municipios_Faixa_Fronteira_2022.shp")) %>%
+  st_transform("WGS84")
+
+# Estabelece a nova proposta de faixa de fronteira
+linha_fronteira_300km <- st_buffer(linha_fronteira, dist = 150000)
+
+# Verifica municípios que passam a pertencer à região
+# Adiciona variável de intercessão
+municipios$inter <- st_intersects(municipios, linha_fronteira_300km, sparse = F)
+
+# Adiciona variável de pertencimento à fronteira original
+municipios <- municipios %>%
+  mutate(fronteira = ifelse(code_muni %in% municipios_fronteira$CD_MUN, 1, 0))
+
+# Cria tratamento e controle
+df <- municipios |>
+  #filtra os municípios na nova faixa
+  filter(inter == T) |> 
+  # cria o grupo de tratamento e controle
+  mutate(treated = ifelse(code_muni %in% municipios_fronteira$CD_MUN, 1, 0),
+         groups = ifelse(treated == 1, "treatment", "control"),
+         # cria os arcos
+         arcos = case_when(abbrev_state %in% c("AP", "PA", "AM", "AC", "RR") ~ "Arco Norte",
+                           abbrev_state %in% c("RO", "MS", "MT") ~ "Arco Central",
+                           abbrev_state %in% c("PR", "SC", "RS") ~ "Arco Sul",
+                           abbrev_state %in% c("SP") ~ "Arco Sudeste")) |> 
+  # exclui a variável classificatória. as recém criadas a substituem
+  dplyr::select(-inter)
+
+# prepara a tabela da fronteira para mergir com a df principal (municipios)
+t <- municipios_fronteira |> 
+  # remove colunas indesejadas
+  select(-c("NM_REGIAO", "CD_UF", "NM_UF", "SIGLA_UF", "NM_MUN", "geometry")) |> 
+  # padroniza o nome code_muni
+  rename("code_muni" = "CD_MUN") |> 
+  # altera o tipo das colunas para numeric e logic
+  mutate(code_muni = as.numeric(code_muni),
+         CID_GEMEA = ifelse(is.na(CID_GEMEA) == F, 1, 0))
+
+# remove o componente gráfico
+st_geometry(t) <- NULL
+
+# realiza o join
+df <- dplyr::left_join(df, t, by = "code_muni")
+rm(t)
+
+# prepara a tabela da sede dos mun da faixa da fronteira para mergir com a df principal (municipios)
+sede_municipios <- st_read(file.path(dropbox,"Sedes_Municipios_Faixa_de_Fronteira_Cidades_Gemeas_2022_shp/Sedes_Municipios_Faixa_de_Fronteira_Cidades_Gemeas_2022.shp")) %>%
+  st_transform("WGS84")
+
+t <- sede_municipios %>%
+  # seleciona colunas desejadas
+  select(c("CD_MUN", "FAIXA_SEDE")) %>%
+  # harmoniza os nomes de variáveis
+  rename("code_muni" = "CD_MUN") %>%
+  # modifica a classe da variável
+  mutate(code_muni = as.numeric(code_muni),
+         FAIXA_SEDE = ifelse(FAIXA_SEDE == "sim", 1, 0))
+
+# remove a geometria da tabela para realizar o join
+st_geometry(t) <- NULL
+
+# realiza o join
+df <- dplyr::left_join(df, t, by = "code_muni")
+rm(t)
+
+# prepara para juntar demais países da américa do sul na base de municípios
+# Remove regiões sem fronteira com o br
+america2 <- america %>%
+  filter(!(COUNTRY %in% c("Brazil", "Falkland Islands (UK)",
+                          "South Georgia and the South Sandwich Is (UK)", "Chile", "Ecuador")))
+
+# verifica interseções
+a <- st_intersects(df, america2, sparse = FALSE)
+
+# renomeia colunas e cria variáveis dummy
+a <- as.data.frame(a) %>%
+  rename("Argentina" = "V1",
+         "Bolivia" = "V2",
+         "Colombia" = "V3",
+         "French_Guiana" = "V4",
+         "Guyana" = "V5",
+         "Suriname" = "V6",
+         "Paraguay" = "V7",
+         "Peru" = "V8",
+         "Uruguay" = "V9",
+         "Venezuela" = "V10") %>%
+  mutate(Argentina = ifelse(Argentina == T, 1, 0),
+         Bolivia = ifelse(Bolivia == T, 1, 0),
+         Colombia = ifelse(Colombia == T, 1, 0),
+         French_Guiana = ifelse(French_Guiana == T, 1, 0),
+         Guyana = ifelse(Guyana == T, 1, 0),
+         Suriname = ifelse(Suriname == T, 1, 0),
+         Paraguay = ifelse(Paraguay == T, 1, 0),
+         Peru = ifelse(Peru == T, 1, 0),
+         Uruguay = ifelse(Uruguay == T, 1, 0),
+         Venezuela = ifelse(Venezuela == T, 1, 0))
+
+df <- cbind(df, a)
+rm(a)
+
+t <- sede_municipio |> 
+  select(code_muni, distancia_fronteira_terrestre, distancias_fronteira_interior)
+st_geometry(t) <- NULL
+
+df <- df |> 
+  left_join(t, by = "code_muni") |> 
+  mutate(distancias_fronteira_interior = ifelse(groups == "treatment", 
+                                                -distancias_fronteira_interior, 
+                                                distancias_fronteira_interior))
+
+
+rm(t)
+
+
 
 # Base do Sistema de Informações sobre Mortalidade (SIM)####
 library(basedosdados)
@@ -24,6 +158,8 @@ sim <- sim %>%
   filter(str_detect(causa_basica, paste0("^", prefixos, collapse = "|"))) |> 
   filter(ano == 2019) |> 
   count(id_municipio, name = "mortes_violentas")
+
+
 
 #Link base ministério segurança publica
 #https://www.gov.br/mj/pt-br/assuntos/sua-seguranca/seguranca-publica/estatistica/download/dnsp-base-de-dados/bancovde-2019.xlsx/@@download/file
