@@ -207,3 +207,6 @@ df <- df |>
 
 
 rm(t)
+
+library(readr)
+write_rds(df, file.path(dropbox, "dados_espaciais.rds"))

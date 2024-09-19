@@ -154,8 +154,39 @@ municipal_table <- municipal_table |>
          transito = (transito/populacao)*100000,
          esclarecer = (esclarecer/populacao)*100000, 
          latrocinio = (latrocinio/populacao)*100000,
-         tentativa_hom = (tentativa_hom/populacao)*100000)
+         tentativa_hom = (tentativa_hom/populacao)*100000) |> 
+  relocate(populacao, .before=feminicidio)
+
+homicidios <- read_excel(file.path(dropbox, "Base_homicidios.xlsx"))
+
+homicidios <- homicidios |> 
+  separate(Município, c("id_municipio_6", "nome_upper"), sep = 7) |> 
+  separate(id_municipio_6, c("id_municipio_6", NA), sep = -1) |> 
+  rename("taxa_analfabetismo" = "Taxa_de_analfabetismo",
+         "taxa_desemprego" = "Taxa_de_desemprego_16a_e+",
+         "gini" = "Gini",
+         "pibpc" = "PIB_per_capita",
+         "taxa_renda_pobre" = "%_população_com_renda_<_1/4_SM",
+         "taxa_trab_infantil" = "Taxa_de_trabalho_infantil",
+         "taxa_homens_jovens" = "Porcentagem_Homens_Jovens",
+         "valor_2010" = "valor-2010",
+         "valor_2011" = "valor-2011",
+         "valor_2012" = "valor-2012",
+         "valor_2013" = "valor-2013",
+         "valor_2014" = "valor-2014",
+         "valor_2015" = "valor-2015",
+         "valor_2016" = "valor-2016",
+         "valor_2017" = "valor-2017",
+         "valor_2018" = "valor-2018",
+         "valor_2019" = "valor-2019"
+         ) |> 
+  left_join(codigos |> select(id_municipio, nome, id_municipio_6), join_by(id_municipio_6)) |> 
+  relocate(id_municipio, nome) |> 
+  select(-id_municipio_6, -nome_upper)
+
+municipal_table <- municipal_table |> 
+  left_join(homicidios)
 
 #salvar
-write_csv(municipal_table, file.path(dropbox, "municipal.csv"))
+write_rds(municipal_table, file.path(dropbox, "municipal.rds"))
 write_csv(estadual_table, file.path(dropbox,"estadual.csv"))
