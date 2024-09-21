@@ -9,11 +9,14 @@ execute:
 
 # Análise exploratória
 ```{r}
-dropbox <- "c:/Users/victo/dropbox/DISSERTACAO"
+dropbox <- "c:/Users/victor/dropbox/DISSERTACAO"
+library(sf)
+library(tmap)
 library(tidyverse)
 library(readr)
 library(skimr)
 library(modelsummary)
+library(rdrobust)
 
 ```
 
@@ -25,22 +28,70 @@ violencia <- violencia |>
   filter(!is.na(id_municipio))
 
 df <- left_join(espaciais, violencia)
+df
 ```
 
 ## Base com valor acima de zero
 ```{r}
 
-df_rdd2 <- df_rdd |> 
-  filter(`valor-2010` != 0) |> 
-  filter(`valor-2011` != 0) |> 
-  filter(`valor-2012` != 0) |> 
-  filter(`valor-2013` != 0) |> 
-  filter(`valor-2014` != 0) |> 
-  filter(`valor-2015` != 0) |> 
-  filter(`valor-2016` != 0) |> 
-  filter(`valor-2017` != 0) |> 
-  filter(`valor-2018` != 0) |> 
-  filter(`valor-2019` != 0)
+df2 <- df|> 
+  filter(valor_2010 != 0) |> 
+  filter(valor_2011 != 0) |> 
+  filter(valor_2012 != 0) |> 
+  filter(valor_2013 != 0) |> 
+  filter(valor_2014 != 0) |> 
+  filter(valor_2015 != 0) |> 
+  filter(valor_2016 != 0) |> 
+  filter(valor_2017 != 0) |> 
+  filter(valor_2018 != 0) |> 
+  filter(valor_2019 != 0)
+
+df2
+```
+## Mapas
+
+```{r}
+tm_shape(df) + tm_polygons(col = "groups")
+```
+
+```{r}
+tm_shape(df) + tm_polygons(col = "arcos")
+```
+
+```{r}
+library(ggplot2)
+library(sf)
+
+# Suponha que seu dataframe 'df' tenha uma coluna 'geometry' com os vetores SF
+ggplot(data = df) +
+  geom_sf(aes(fill = groups)) +  # 'groups' contém o status de tratamento/controle
+  theme_minimal() +
+  scale_fill_manual(values = c("control" = "blue", "treatment" = "red")) +
+  labs(title = "Distribuição dos Municípios: Tratamento vs Controle",
+       fill = "Grupo")
+
+```
+
+```{r}
+ggplot(data = df) +
+  geom_sf(aes(fill = log(mortes_violentas))) +  # 'mortes_violentas' é o indicador de segurança
+  theme_minimal() +
+  scale_fill_viridis_c() +  # Escala de cores contínuas para indicadores numéricos
+  labs(title = "Distribuição de Mortes Violentas por Município",
+       fill = "Mortes Violentas")
+
+```
+
+```{r}
+library(ggplot2)
+library(sf)
+
+ggplot(data = df) +
+  geom_sf(aes(fill = distancia_fronteira_terrestre)) +
+  scale_fill_viridis_c() +  # Escala de cores para a distância
+  labs(title = "Distância dos Municípios à Fronteira Terrestre",
+       fill = "Distância (km)")
+
 ```
 
 
@@ -84,6 +135,117 @@ ggplot(df, aes(x = distancia_fronteira_terrestre, y = mortes_violentas)) +
     y = "Mortes Violentas"
   ) +
   theme_minimal()
+```
+
+```{r}
+ggplot(df, aes(x = distancias_fronteira_interior, y = (mortes_violentas*populacao/100000))) +
+  geom_point(color = "blue") +  # Gráfico de dispersão
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +  # Linha vertical em 150 km
+  labs(
+    title = "Dispersão das Mortes Violentas pela Distância ao Limite dos Municípios da FF",
+    x = "Distância ao limite dos municípios da FF (m)",
+    y = "Mortes Violentas"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Suponha que "distancia_fronteira_terrestre" seja a running variable e "mortes_violentas" seja o resultado
+# Limite de 150 km para a fronteira
+rd_est <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000)
+
+# Resumo dos resultados
+summary(rd_est)
+```
+
+```{r}
+# Testar diferentes bandwidths
+
+# Bandwidth de 30.000 km
+rd_est_30k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 30000)
+summary(rd_est_30k)
+
+# Bandwidth de 40.000 km
+rd_est_40k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 40000)
+summary(rd_est_40k)
+
+# Bandwidth de 60.000 km
+rd_est_60k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 60000)
+summary(rd_est_60k)
+
+```
+
+```{r}
+# Definir o ponto de corte
+cutoff <- 150000
+
+# Lista de variáveis de segurança
+seguranca_vars <- c("feminicidio", "hom_doloso", "lesao", "mandado", "transito", "esclarecer", "latrocinio", "tentativa_hom", "mortes_violentas")
+
+# Loop para rodar o modelo com cada variável de segurança
+for (var in seguranca_vars) {
+  cat("\n\n### Resultados para a variável:", var, "\n")
+  
+  # Executar o modelo com bandwidth padrão
+  rd_est <- rdrobust(y = df[[var]], x = df$distancia_fronteira_terrestre, c = cutoff)
+  print(summary(rd_est))
+}
+
+```
+
+
+```{r}
+rdplot(df$mortes_violentas, df$distancia_fronteira_terrestre, c = 150000)
+
+rdplot(df$mortes_violentas, df$distancia_fronteira_terrestre, c = 100000)
+
+rdplot(df$mortes_violentas, df$distancia_fronteira_terrestre, c = 200000)
+
+```
+
+```{r}
+# Variável moderadora (PIB per capita)
+moderator <- df$pibpc
+
+# Interação no modelo RD
+rd_with_interaction <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(moderator, df$distancia_fronteira * moderator), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction1 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_analfabetismo, df$distancia_fronteira * df$taxa_analfabetismo), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction2 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_desemprego, df$distancia_fronteira * df$taxa_desemprego), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction3 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_renda_pobre, df$distancia_fronteira * df$taxa_renda_pobre), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction4 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_trab_infantil, df$distancia_fronteira * df$taxa_trab_infantil), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction5 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_homens_jovens, df$distancia_fronteira * df$taxa_homens_jovens), 
+                                c = 150000)
+
+# Visualizar resultados
+summary(rd_with_interaction)
+summary(rd_with_interaction1)
+summary(rd_with_interaction2)
+summary(rd_with_interaction3)
+summary(rd_with_interaction4)
+summary(rd_with_interaction5)
+
+
 ```
 
 
