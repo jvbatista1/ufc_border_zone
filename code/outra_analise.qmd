@@ -1,0 +1,141 @@
+---
+title: "outra_analise"
+author: "Victor Batista"
+format: revealjs
+---
+# Modelos da faixa de fronteira 150 km
+
+# Modelos com limite dos municipios da FF (Todo o Brasil)
+```{r}
+# Suponha que "distancia_fronteira_terrestre" seja a running variable e "mortes_violentas" seja o resultado
+# Limite de 150 km para a fronteira
+rd_est <- rdrobust(y = df$mortes_violentas, x = df$distancias_fronteira_interior, c = 0)
+
+# Resumo dos resultados
+summary(rd_est)
+```
+
+```{r}
+# Testar diferentes bandwidths
+
+# Bandwidth de 30.000 km
+rd_est_30k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 30000)
+summary(rd_est_30k)
+
+# Bandwidth de 40.000 km
+rd_est_40k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 40000)
+summary(rd_est_40k)
+
+# Bandwidth de 60.000 km
+rd_est_60k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 60000)
+summary(rd_est_60k)
+
+```
+
+# Moderadores socioeconômicos separados
+```{r}
+# Variável moderadora (PIB per capita)
+moderator <- df$pibpc
+
+# Interação no modelo RD
+rd_with_interaction <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(moderator, df$distancia_fronteira * moderator), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction1 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_analfabetismo, df$distancia_fronteira * df$taxa_analfabetismo), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction2 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_desemprego, df$distancia_fronteira * df$taxa_desemprego), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction3 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_renda_pobre, df$distancia_fronteira * df$taxa_renda_pobre), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction4 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_trab_infantil, df$distancia_fronteira * df$taxa_trab_infantil), 
+                                c = 150000)
+
+# Interação no modelo RD
+rd_with_interaction5 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
+                                covs = cbind(df$taxa_homens_jovens, df$distancia_fronteira * df$taxa_homens_jovens), 
+                                c = 150000)
+
+# Visualizar resultados
+summary(rd_with_interaction)
+summary(rd_with_interaction1)
+summary(rd_with_interaction2)
+summary(rd_with_interaction3)
+summary(rd_with_interaction4)
+summary(rd_with_interaction5)
+
+```
+
+# Gráficos
+```{r}
+library(ggplot2)
+
+# Supondo que seu dataframe já esteja carregado e tenha as colunas necessárias
+# Substitua 'df' pelo nome do seu dataframe
+ggplot(df_norte, aes(x = distancias_fronteira_interior, y = mortes_violentas)) +
+  geom_point(color = "blue") +  # Gráfico de dispersão
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +  # Linha vertical em 150 km
+  labs(
+    title = "Dispersão das Mortes Violentas pela Distância à Fronteira Terrestre",
+    x = "Distância à Fronteira Terrestre (m)",
+    y = "Mortes Violentas"
+  ) +
+  theme_minimal()
+
+```
+
+```{r}
+# Dividir os dados em dois grupos: alta e baixa taxa de analfabetismo
+df$grupo_analf <- ifelse(df$taxa_analfabetismo > median(df$taxa_analfabetismo, na.rm = TRUE), "Alta Analfabetismo", "Baixa Analfabetismo")
+
+# Gráfico de dispersão colorido pelo grupo
+ggplot(df, aes(x = distancias_fronteira_interior, y = mortes_violentas, color = grupo_analf)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(title = "Efeito da Fronteira sobre Mortes Violentas",
+       x = "Distância da Fronteira Interior",
+       y = "Mortes Violentas")
+
+```
+
+```{r}
+# Gráfico de barras para os coeficientes das interações
+coef_data <- data.frame(
+  Moderador = c("Taxa Analfabetismo", "Taxa Desemprego", "Gini", "PIB per Capita", "Taxa Renda Pobre", "Taxa Trabalho Infantil", "Taxa Homens Jovens"),
+  Coeficiente = c(17.025, 14.979, 17.200, 16.160, 15.001, 15.233, 14.167)
+)
+
+ggplot(coef_data, aes(x = Moderador, y = Coeficiente)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  theme_minimal() +
+  labs(title = "Coeficientes de Interação com a Distância da Fronteira",
+       x = "Moderadores",
+       y = "Coeficiente Estimado")
+
+```
+
+```{r}
+# Exemplo: Gráfico de interação entre PIB per capita e distância da fronteira
+ggplot(df, aes(x = pibpc, y = mortes_violentas, color = factor(distancias_fronteira_interior < 0))) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(title = "Interação entre PIB per capita e Efeito da Fronteira",
+       x = "PIB per capita",
+       y = "Mortes Violentas",
+       color = "Fronteira")
+
+```
+

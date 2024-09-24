@@ -6,7 +6,6 @@ execute:
   echo: false
   warning: false
 ---
-
 # Análise exploratória
 ```{r}
 dropbox <- "c:/Users/victor/dropbox/DISSERTACAO"
@@ -28,7 +27,11 @@ violencia <- violencia |>
   filter(!is.na(id_municipio))
 
 df <- left_join(espaciais, violencia)
+df <- df |> 
+  mutate(taxa_homens_jovens = as.numeric(taxa_homens_jovens))
+
 df
+
 ```
 
 ## Base com valor acima de zero
@@ -86,7 +89,7 @@ ggplot(data = df) +
 library(ggplot2)
 library(sf)
 
-ggplot(data = df) +
+ggplot(data = df_norte) +
   geom_sf(aes(fill = distancia_fronteira_terrestre)) +
   scale_fill_viridis_c() +  # Escala de cores para a distância
   labs(title = "Distância dos Municípios à Fronteira Terrestre",
@@ -118,7 +121,7 @@ df |>
 
 ## Estatísticas categóricas 
 ```{r}
-df |> 
+df_norte |> 
   select(groups, arcos) |> 
   datasummary_skim()
 ```
@@ -149,35 +152,70 @@ ggplot(df, aes(x = distancias_fronteira_interior, y = (mortes_violentas*populaca
   theme_minimal()
 ```
 
-```{r}
-# Suponha que "distancia_fronteira_terrestre" seja a running variable e "mortes_violentas" seja o resultado
-# Limite de 150 km para a fronteira
-rd_est <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000)
-
-# Resumo dos resultados
-summary(rd_est)
-```
 
 ```{r}
-# Testar diferentes bandwidths
 
-# Bandwidth de 30.000 km
-rd_est_30k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 30000)
-summary(rd_est_30k)
 
-# Bandwidth de 40.000 km
-rd_est_40k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 40000)
-summary(rd_est_40k)
-
-# Bandwidth de 60.000 km
-rd_est_60k <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira_terrestre, c = 150000, h = 60000)
-summary(rd_est_60k)
 
 ```
 
+
 ```{r}
+rdplot(df2$mortes_violentas, df2$distancias_fronteira_interior, c = 0)
+```
+
+# Arco Norte
+
+```{r}
+df_norte <- df |> filter(arcos=="Arco Norte")
 # Definir o ponto de corte
-cutoff <- 150000
+cutoff <- 0
+
+# Lista de variáveis de segurança
+seguranca_vars <- c("feminicidio", "hom_doloso", "lesao", "mandado", "transito", "esclarecer", "latrocinio", "tentativa_hom", "mortes_violentas")
+
+seguranca_vars2 <- c("valor_2010", "valor_2011", "valor_2012", "valor_2013", "valor_2014", "valor_2015", "valor_2016", "valor_2017", "valor_2018", "valor_2019")
+
+# Loop para rodar o modelo com cada variável de segurança
+for (var in seguranca_vars) {
+  cat("\n\n### Resultados para a variável:", var, "\n")
+  
+  # Executar o modelo com bandwidth padrão
+  rd_est <- rdrobust(y = df_norte[[var]], x = df_norte$distancias_fronteira_interior, c = cutoff, covs = moderadores)
+  print(summary(rd_est))
+}
+
+```
+
+
+## Testes de heterogeneidade
+
+```{r}
+# Instalar e carregar o pacote 'car' se ainda não estiver instalado
+library(car)
+
+# Criar um modelo linear com as variáveis moderadoras
+model_vif <- lm(mortes_violentas ~ taxa_analfabetismo + taxa_desemprego + gini + pibpc + taxa_renda_pobre + taxa_trab_infantil + taxa_homens_jovens, data = df_norte)
+
+# Calcular o VIF
+vif_values <- vif(model_vif)
+
+# Ver os valores de VIF
+print(vif_values)
+
+```
+
+## Modelo final
+```{r}
+df_norte <- df %>% filter(arcos == "Arco Norte")
+# Modelo com múltiplos moderadores (taxa de analfabetismo, desemprego e PIB per capita)
+moderadores <- cbind(df_norte$taxa_analfabetismo, df_norte$distancias_fronteira_interior * df_norte$taxa_analfabetismo,
+                     df_norte$taxa_desemprego, df_norte$distancias_fronteira_interior * df_norte$taxa_desemprego,
+                     df_norte$gini, df_norte$distancias_fronteira_interior * df_norte$gini,
+                     df_norte$pibpc, df_norte$distancias_fronteira_interior * df_norte$pibpc,
+                     df_norte$taxa_renda_pobre, df_norte$distancias_fronteira_interior * df_norte$taxa_renda_pobre,
+                     df_norte$taxa_trab_infantil, df_norte$distancias_fronteira_interior * df_norte$taxa_trab_infantil,
+                     df_norte$taxa_homens_jovens, df_norte$distancias_fronteira_interior * df_norte$taxa_homens_jovens)
 
 # Lista de variáveis de segurança
 seguranca_vars <- c("feminicidio", "hom_doloso", "lesao", "mandado", "transito", "esclarecer", "latrocinio", "tentativa_hom", "mortes_violentas")
@@ -187,67 +225,120 @@ for (var in seguranca_vars) {
   cat("\n\n### Resultados para a variável:", var, "\n")
   
   # Executar o modelo com bandwidth padrão
-  rd_est <- rdrobust(y = df[[var]], x = df$distancia_fronteira_terrestre, c = cutoff)
+  rd_est <- rdrobust(y = df_norte[[var]],
+                     x = df_norte$distancias_fronteira_interior,
+                     covs = moderadores, 
+                     c = 0)
   print(summary(rd_est))
 }
 
 ```
 
-
 ```{r}
-rdplot(df$mortes_violentas, df$distancia_fronteira_terrestre, c = 150000)
-
-rdplot(df$mortes_violentas, df$distancia_fronteira_terrestre, c = 100000)
-
-rdplot(df$mortes_violentas, df$distancia_fronteira_terrestre, c = 200000)
+rdplot(y = df_norte$mortes_violentas, x = df_norte$distancias_fronteira_interior, c = 0, nbins = 50)
 
 ```
 
-```{r}
-# Variável moderadora (PIB per capita)
-moderator <- df$pibpc
+# Arco Sul
+```{r echo=FALSE}
+# Carregando pacotes necessários
+library(rdrobust)
+library(tidyverse)
 
-# Interação no modelo RD
-rd_with_interaction <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
-                                covs = cbind(moderator, df$distancia_fronteira * moderator), 
-                                c = 150000)
+# Filtrar dados do arco sul
+df_sul <- df |> filter(arcos == "Arco Sul")
 
-# Interação no modelo RD
-rd_with_interaction1 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
-                                covs = cbind(df$taxa_analfabetismo, df$distancia_fronteira * df$taxa_analfabetismo), 
-                                c = 150000)
-
-# Interação no modelo RD
-rd_with_interaction2 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
-                                covs = cbind(df$taxa_desemprego, df$distancia_fronteira * df$taxa_desemprego), 
-                                c = 150000)
-
-# Interação no modelo RD
-rd_with_interaction3 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
-                                covs = cbind(df$taxa_renda_pobre, df$distancia_fronteira * df$taxa_renda_pobre), 
-                                c = 150000)
-
-# Interação no modelo RD
-rd_with_interaction4 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
-                                covs = cbind(df$taxa_trab_infantil, df$distancia_fronteira * df$taxa_trab_infantil), 
-                                c = 150000)
-
-# Interação no modelo RD
-rd_with_interaction5 <- rdrobust(y = df$mortes_violentas, x = df$distancia_fronteira, 
-                                covs = cbind(df$taxa_homens_jovens, df$distancia_fronteira * df$taxa_homens_jovens), 
-                                c = 150000)
-
-# Visualizar resultados
-summary(rd_with_interaction)
-summary(rd_with_interaction1)
-summary(rd_with_interaction2)
-summary(rd_with_interaction3)
-summary(rd_with_interaction4)
-summary(rd_with_interaction5)
-
+# Rodando o modelo RDD com múltiplos moderadores
+rdd_sul <- rdrobust(y = df_sul$mortes_violentas,
+                    x = df_sul$distancias_fronteira_interior,
+                    c = 0)
+# Resumo dos resultados
+summary(rdd_sul)
 
 ```
 
+```{r echo=FALSE}
+
+# Filtrar dados do arco sul
+df_sul <- df |> filter(arcos == "Arco Sul")
+
+# Rodando o modelo RDD com múltiplos moderadores
+rdd_sul_falso1<- rdrobust(y = df_sul$mortes_violentas, 
+                                            x = df_sul$distancias_fronteira_interior,
+                                            c = -50000)
+
+rdd_sul_falso2<- rdrobust(y = df_sul$mortes_violentas, 
+                                            x = df_sul$distancias_fronteira_interior,
+                                            c = 50000)
+
+# Resumo dos resultados
+print("Resultados para o teste com limiar mais à esquerda")
+summary(rdd_sul_falso1)
+
+print("Resultados para o teste com limiar mais à direita")
+summary(rdd_sul_falso2)
+
+```
+
+```{r,echo=FALSE}
+# Filtrar dados do arco sul
+df_sul <- df |> filter(arcos == "Arco Sul")
+
+# Criando variáveis moderadoras
+moderadores <- cbind(df_sul$taxa_analfabetismo, df_sul$distancias_fronteira_interior * df_sul$taxa_analfabetismo,
+                     df_sul$taxa_desemprego, df_sul$distancias_fronteira_interior * df_sul$taxa_desemprego,
+                     df_sul$gini, df_sul$distancias_fronteira_interior * df_sul$gini,
+                     df_sul$pibpc, df_sul$distancias_fronteira_interior * df_sul$pibpc,
+                     df_sul$taxa_renda_pobre, df_sul$distancias_fronteira_interior * df_sul$taxa_renda_pobre,
+                     df_sul$taxa_trab_infantil, df_sul$distancias_fronteira_interior * df_sul$taxa_trab_infantil,
+                     df_sul$taxa_homens_jovens, df_sul$distancias_fronteira_interior * df_sul$taxa_homens_jovens)
+# Rodando o modelo RDD com múltiplos moderadores
+
+rdd_sul_multiplos_moderadores <- rdrobust(y = df_sul$mortes_violentas, 
+                                            x = df_sul$distancias_fronteira_interior, 
+                                            covs = moderadores, 
+                                            c = 0)
+
+# Resumo dos resultados
+summary(rdd_sul_multiplos_moderadores)
+```
+
+```{r,echo=FALSE}
+df_sul <- df |> filter(arcos=="Arco Sul")
+# Definir o ponto de corte
+cutoff <- 0
+
+seguranca_vars2 <- c("valor_2010", "valor_2011", "valor_2012", "valor_2013", "valor_2014", "valor_2015", "valor_2016", "valor_2017", "valor_2018", "valor_2019")
+
+# Loop para rodar o modelo com cada variável de segurança
+for (var in seguranca_vars2) {
+  cat("\n\n### Resultados para a variável:", var, "\n")
+  
+  # Executar o modelo com bandwidth padrão
+  rd_est <- rdrobust(y = df_sul[[var]], x = df_sul$distancias_fronteira_interior, c = cutoff, covs = moderadores)
+  print(summary(rd_est))
+}
+
+```
+
+```{r,echo=FALSE}
+df_sul <- df |> filter(arcos=="Arco Sul")
+# Definir o ponto de corte
+cutoff <- 0
+
+# Lista de variáveis de segurança
+seguranca_vars <- c("feminicidio", "hom_doloso", "lesao", "mandado", "transito", "esclarecer", "latrocinio", "tentativa_hom", "mortes_violentas")
+
+# Loop para rodar o modelo com cada variável de segurança
+for (var in seguranca_vars) {
+  cat("\n\n### Resultados para a variável:", var, "\n")
+  
+  # Executar o modelo com bandwidth padrão
+  rd_est <- rdrobust(y = df_sul[[var]], x = df_sul$distancias_fronteira_interior, c = cutoff, covs = moderadores)
+  print(summary(rd_est))
+}
+
+```
 
 # Homicídios
 
